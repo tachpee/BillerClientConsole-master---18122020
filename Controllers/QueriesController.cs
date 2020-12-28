@@ -31,8 +31,11 @@ namespace BillerClientConsole.Controllers
                 if (query.HasQuery == true)
                 {
                     //If it exists and has another query Update the current 
-                    var queryExists = QueryExits.FirstOrDefault();
+                    Queries queryExists = QueryExits.FirstOrDefault();
                     queryExists.QueryCount += 1;
+                    queryExists.comment = query.comment;;
+                    queryExists.status = "Pending";
+
                     
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
@@ -110,8 +113,10 @@ namespace BillerClientConsole.Controllers
                 if (query.HasQuery == true)
                 {
                     //If it exists and has another query Update the current 
-                    var queryExists = QueryExits.FirstOrDefault();
+                    Queries queryExists = QueryExits.FirstOrDefault();
                     queryExists.QueryCount += 1;
+                    queryExists.comment = query.comment; ;
+                    queryExists.status = "Pending";
 
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
@@ -189,8 +194,10 @@ namespace BillerClientConsole.Controllers
                 if (query.HasQuery == true)
                 {
                     //If it exists and has another query Update the current 
-                    var queryExists = QueryExits.FirstOrDefault();
+                    Queries queryExists = QueryExits.FirstOrDefault();
                     queryExists.QueryCount += 1;
+                    queryExists.comment = query.comment; ;
+                    queryExists.status = "Pending";
 
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
