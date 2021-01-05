@@ -355,8 +355,9 @@ namespace BillerClientConsole.Models
         public string TelephoneNumber { get; set; }
         public string MobileNumber { get; set; }
         public string EmailAddress { get; set; }
-        public bool Query { get; set; }
-        public bool HasQuery { get; set; }
+        public int HasQuery { get; set; }
         public string Comment { get; set; }
+        public string status { get; set; }
+        public int QueryCount { get; set; }
     }
 }
