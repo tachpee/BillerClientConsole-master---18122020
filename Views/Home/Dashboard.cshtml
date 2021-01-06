@@ -1,11 +1,12 @@
-﻿@{
+﻿@using BillerClientConsole.Models.QueryModel
+@{
     Layout = "../Shared/_LayoutMain";
 }
 <div class="container-fluid">
 
     <div class="row">
         @*companies*@
-       
+
         <div class="col-md-8 mb-5">
 
             @if (ViewBag.RegEntitiesSummary != null && ViewBag.RegEntitiesSummary.Count > 0)
@@ -28,7 +29,7 @@
                                 <thead mt-5 mb-5>
                                     <tr>
                                         <th style="color:#0C2A46">Type of entity</th>
-                                       
+
                                         <th style="color:#0C2A46">Registered name</th>
                                         <th style="color:#0C2A46">Registered number</th>
                                         <th style="color:#0C2A46">Designation</th>
@@ -42,23 +43,23 @@
 
                                     @foreach (var summary in ViewBag.RegEntitiesSummary)
                                     {
-                                    <tr>
+                                        <tr>
 
-                                        <td> @summary.TypeOfEntity </td>
-                                        <td> @summary.RegisteredName </td>
-                                        <td> @summary.RegisteredNumber </td>
-                                        <td> @summary.Designation</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a href="/Docs/Summary?=@summary.SearchRef" style="color:#0C2A46;text-decoration:underline">Company Document Summary</a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a href="/Docs/Test?=@summary.SearchRef" style="color:#0C2A46;text-decoration:underline">Company Certificate</a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            <td> @summary.TypeOfEntity </td>
+                                            <td> @summary.RegisteredName </td>
+                                            <td> @summary.RegisteredNumber </td>
+                                            <td> @summary.Designation</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="/Docs/Summary?=@summary.SearchRef" style="color:#0C2A46;text-decoration:underline">Company Document Summary</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="/Docs/Test?=@summary.SearchRef" style="color:#0C2A46;text-decoration:underline">Company Certificate</a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -215,67 +216,67 @@
 
                 @if (ViewBag.credits.NameSearch > 0 || ViewBag.credits.PvtLimitedCompany > 0 || ViewBag.Payments.Count > 0)
                 {
-            <div class="card-body">
-                @if (ViewBag.credits.NameSearch > 0 || ViewBag.credits.PvtLimitedCompany > 0)
-                {
-                    <ul class="list-group list-group-flush border-bottom border-gray">
-                        @if (ViewBag.credits.NameSearch > 0)
+                    <div class="card-body">
+                        @if (ViewBag.credits.NameSearch > 0 || ViewBag.credits.PvtLimitedCompany > 0)
                         {
-                            <li class="list-group-item d-flex justify-content-between">
-                                Name Search
-                                <span>@ViewBag.credits.NameSearch</span>
-                            </li>
+                            <ul class="list-group list-group-flush border-bottom border-gray">
+                                @if (ViewBag.credits.NameSearch > 0)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        Name Search
+                                        <span>@ViewBag.credits.NameSearch</span>
+                                    </li>
+                                }
+                                @if (ViewBag.credits.PvtLimitedCompany > 0)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        Private Limited Entity
+                                        <span>@ViewBag.credits.PvtLimitedCompany</span>
+                                    </li>
+                                }
+                            </ul>
                         }
-                        @if (ViewBag.credits.PvtLimitedCompany > 0)
+
+                        @*if (ViewBag.Payments.Count > 0)
                         {
-                            <li class="list-group-item d-flex justify-content-between">
-                                Private Limited Entity
-                                <span>@ViewBag.credits.PvtLimitedCompany</span>
-                            </li>
-                        }
-                    </ul>
-                }
+                            <table class="table  table-mb table-hover" style="color:#0C2A46;">
+                                <thead mt-5 mb-5 style="color:#0C2A46;">
+                                    <tr>
+                                        <th style="color:#0C2A46">Date time</th>
+                                        <th style="color:#0C2A46">Description</th>
+                                        <th style="color:#0C2A46">Amount Debited</th>
+                                        <th style="color:#0C2A46">Amount Credited</th>
+                                    </tr>
+                                </thead>
+                                <tbody>*@
+                        @*@foreach (var payment in ViewBag.Payments)
+                                    {
+                                        <tr>
+                                            <td>@payment.Date</td>
+                                            <td>@payment.Description</td>
+                                            @if (@payment.AmountDr > 0)
+                                            {
+                                                <td>@payment.AmountDr</td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
+                                            @if (@payment.AmountCr > 0)
+                                            {
+                                                <td>@payment.AmountCr</td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
 
-                @*if (ViewBag.Payments.Count > 0)
-                {
-                    <table class="table  table-mb table-hover" style="color:#0C2A46;">
-                        <thead mt-5 mb-5 style="color:#0C2A46;">
-                            <tr>
-                                <th style="color:#0C2A46">Date time</th>
-                                <th style="color:#0C2A46">Description</th>
-                                <th style="color:#0C2A46">Amount Debited</th>
-                                <th style="color:#0C2A46">Amount Credited</th>
-                            </tr>
-                        </thead>
-                        <tbody>*@
-                            @*@foreach (var payment in ViewBag.Payments)
-                            {
-                                <tr>
-                                    <td>@payment.Date</td>
-                                    <td>@payment.Description</td>
-                                    @if (@payment.AmountDr > 0)
-                                    {
-                                        <td>@payment.AmountDr</td>
+                                        </tr>
                                     }
-                                    else
-                                    {
-                                        <td>-</td>
-                                    }
-                                    @if (@payment.AmountCr > 0)
-                                    {
-                                        <td>@payment.AmountCr</td>
-                                    }
-                                    else
-                                    {
-                                        <td>-</td>
-                                    }
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }*@
-            </div>
+                                </tbody>
+                            </table>
+                        }*@
+                    </div>
                 }
 
 
@@ -288,11 +289,48 @@
                 </div>
             </div>
         </div>
-
-
         
+            @if (ViewBag.Queries != null)
+            {
+               <div class="card">
+                        <h2 class="card-header"><strong>Queries</strong></h2>
 
-    </div>
+                        <div class="card-body">
+                            <div class="table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Application Ref</th>
+                                            <th>Query Comment</th>
+                                            <th>Step </th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (Queries item in ViewBag.Queries)
+                                    {
+<tbody>
+    <tr>
+        <td>@item.applicationRef</td>
+        <td>@item.comment</td>
+        <td>@item.tableName</td>
+        <td></td>
+
+    </tr>
+</tbody>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+            }
+
+
+
+
+        </div>
 </div>
 
 

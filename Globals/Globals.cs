@@ -145,6 +145,8 @@ namespace BillerClientConsole._Globals
         public static string end_point_post__has_query = $"{service_end_point}/api/v1/PostHasQuery";// End point for queries
         public static string end_point_get_queries = $"{service_end_point}/api/v1/GetApplicationQueries";// End point to get all queries
         public static string end_point_post_update_registeredoffice = $"{service_end_point}/api/v1/UpdateRegisteredOffice";// End point to get all queries
+        public static string end_point_post_update_companyinfo = $"{service_end_point}/api/v1/UpdateCompanyInfo";// update company info queries
+        public static string end_point_resolveQuery_companyinfo = $"{service_end_point}/api/v1/ResolveQuery";// update company info queries
 
 
         //Payments

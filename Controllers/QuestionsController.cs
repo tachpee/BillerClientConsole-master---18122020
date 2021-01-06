@@ -13,6 +13,8 @@ using System.Collections;
 using BillerClientConsole.Dtos;
 using PdfSharpCore.Fonts;
 using BillerClientConsole.Data;
+using System.Net.Mail;
+using System.Net;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,7 +53,7 @@ namespace BillerClientConsole.Controllers
             var client = new HttpClient();
             var resp = await client.GetAsync($"{Globals.service_end_point}/Names/{ user.Email}/GetUnusedNames").Result.Content.ReadAsStringAsync();
             dynamic json_data = JsonConvert.DeserializeObject(resp);
-
+           
             var data = json_data.data.value;
             List<mSearch> nameSear = JsonConvert.DeserializeObject<List<mSearch>>(data.ToString());
             List<mSearchInfo> nameSearchSummary = new List<mSearchInfo>();
@@ -83,6 +85,10 @@ namespace BillerClientConsole.Controllers
             return View();
         }
 
+        public IActionResult Queries()
+        {
+            return View();
+        }
 
         [HttpGet("ApprovedNameSearches")]
         public async Task<IActionResult> NameSearches()
@@ -1472,24 +1478,120 @@ namespace BillerClientConsole.Controllers
         [HttpPost("/{applicationId}/Approve")]
         public async Task<IActionResult> ApprovePvtEntityApplication(string applicationId)
         {
+            //var db = new db();
+            
             var client = new HttpClient();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
+            var companyApplication = await client.GetAsync($"{Globals.end_point_get_company_application_by_application_ref}?ApplicationRef="+applicationId).Result.Content.ReadAsStringAsync();
+            var res1 = JsonConvert.DeserializeObject(companyApplication);
+            ///var CompInfo = res1.data.value[0].companyInfo;
 
+           //// var DeCompInfo = JsonConvert.DeserializeObject<mCompanyInfo>(CompInfo.ToString());
+           // var email2 = DeCompInfo.AppliedBy;
+
+            
             //Code to See if there are pending Queries on the Application 
             var ApplicationQueries = queryDb.Queries.Where(q => q.applicationRef == applicationId && q.status == "Pending").ToList();
             if (ApplicationQueries.Count > 0)
             {
                 //Code to Send email to user
+                //Code to update the Company info
+                var update = await client.GetAsync($"{Globals.end_point_post_update_companyinfo}/" + applicationId);
+                if (update.IsSuccessStatusCode)
+                {
+                    //Code to Send email to user
+                    var email1 = "email2";// user.Email;
+                    SmtpClient emailclient1 = new SmtpClient("mail.ttcsglobal.com");
+                    emailclient1.UseDefaultCredentials = false;
+                    emailclient1.Credentials = new NetworkCredential("companiesonlinezw", "N3wPr0ducts@1");
+                    // client.Credentials = new NetworkCredential("username", "password");
+                    MailMessage mailMessage1 = new MailMessage();
+                    mailMessage1.From = new MailAddress("companiesonlinezw@ttcsglobal.com");
+                    mailMessage1.To.Add(email1);
+                    mailMessage1.IsBodyHtml = true;
+                    mailMessage1.Body = ("<!DOCTYPE html> " +
+                        "<html xmlns=\"http://www.w3.org/1999/xhtml\">" +
+                        "<head>" +
+                            "<title>Email</title>" +
+                        "</head>" +
 
+                        "<body style=\"font-family:'Century Gothic'\">" +
+                        "<p><b>Hi Dear valued Customer</b></p>" +
+
+                        "<p>You have a query in you company application, please go and review the process.</p>" +
+
+                        "<a>https://deedsapp.ttcsglobal.com:6868/Auth/Login </a>" +
+                        "<p>Please login and correct issues/p>" +
+                       "<p> Enjoy our services.</p> " +
+
+                        "<p>Regards</p>" +
+
+                        "<p>DCIP</p>" +
+
+                        "</body>" +
+                        "</html>");//GetFormattedMessageHTML();
+                    mailMessage1.Subject = "Company Application has Queries";
+                    emailclient1.Send(mailMessage1);
+                    // return RedirectToAction("Queries");
+                    // return Json(new { });
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
                 //return View("WithQueries");
             }
+            else
+            {
+                var resolve = await client.GetAsync($"{Globals.end_point_resolveQuery_companyinfo}/{applicationId}");
+                if (resolve.IsSuccessStatusCode)
+                {
+                    var email ="email2";// user.Email;
+                    SmtpClient emailclient = new SmtpClient("mail.ttcsglobal.com");
+                    emailclient.UseDefaultCredentials = false;
+                    emailclient.Credentials = new NetworkCredential("companiesonlinezw", "N3wPr0ducts@1");
+                    // client.Credentials = new NetworkCredential("username", "password");
+                    MailMessage mailMessage = new MailMessage();
+                    mailMessage.From = new MailAddress("companiesonlinezw@ttcsglobal.com");
+                    mailMessage.To.Add(email);
+                    mailMessage.IsBodyHtml = true;
+                    mailMessage.Body = ("<!DOCTYPE html> " +
+                        "<html xmlns=\"http://www.w3.org/1999/xhtml\">" +
+                        "<head>" +
+                            "<title>Email</title>" +
+                        "</head>" +
 
-			 //Code to do Query Verification on the incoming ApplicationId
-            var result = await client.GetAsync($"{Globals.end_point_get_queries}").Result.Content.ReadAsStringAsync();
-           // var res= result.Content.ReadAsStringAsync();
-            var queries = JsonConvert.DeserializeObject<IEnumerable<mQuery>>(result).ToList();
-            var response = await client.PostAsJsonAsync<string>($"{Globals.service_end_point}/PvtRegistration/{applicationId}/Approve", user.Email).Result.Content.ReadAsStringAsync();
-            return Ok();
+                        "<body style=\"font-family:'Century Gothic'\">" +
+                        "<p><b>Hi Dear valued Customer</b></p>" +
+
+                        "<p>Your Company Application has been Approved, use the link to login and Check your Company Application.</p>" +
+
+                        "<a>https://deedsapp.ttcsglobal.com:6868/Auth/Login </a>" +
+                        "<p>Please login/p>" +
+                       "<p> Enjoy our services.</p> " +
+
+                        "<p>Regards</p>" +
+
+                        "<p>DCIP</p>" +
+
+                        "</body>" +
+                        "</html>");//GetFormattedMessageHTML();
+                    mailMessage.Subject = "Company Application has been Approved";
+                    emailclient.Send(mailMessage);
+                }
+
+
+
+                //Code to do Query Verification on the incoming ApplicationId
+                //var result = await client.GetAsync($"{Globals.end_point_get_queries}").Result.Content.ReadAsStringAsync();
+                //// var res= result.Content.ReadAsStringAsync();
+                //var queries = JsonConvert.DeserializeObject<IEnumerable<mQuery>>(result).ToList();
+                var response = await client.PostAsJsonAsync<string>($"{Globals.service_end_point}/PvtRegistration/{applicationId}/Approve", user.Email).Result.Content.ReadAsStringAsync();
+                return Ok();
+            }
+           
+
         }
 
 

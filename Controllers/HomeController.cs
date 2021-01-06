@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BillerClientConsole._Globals;
 using Newtonsoft.Json;
+using BillerClientConsole.Models.QueryModel;
+using BillerClientConsole.Data;
 
 namespace BillerClientConsole.Controllers
 {
@@ -18,7 +20,13 @@ namespace BillerClientConsole.Controllers
     {
 
         private dbContext db = new dbContext();
+        private readonly QueryDbContext context;
 
+        // private QueryDbContext context = new QueryDbContext();
+        public HomeController(QueryDbContext context)
+        {
+            this.context = context;
+        }
         [Route("Dashboard")]
         [Route("")]
         public async Task<IActionResult> Dashboard()
@@ -196,8 +204,14 @@ namespace BillerClientConsole.Controllers
             }
             
             ViewBag.EntityApplications = companyApplications;
-
-
+            List<Queries> query = new List<Queries>();
+            foreach (var item in companyApplications)
+            {
+                query = context.Queries.Where(q => q.applicationRef == item.companyInfo.Application_Ref && q.status == "Pending").ToList();
+                
+            }
+            ViewBag.Queries = query;
+           
             return View();
         }
 
