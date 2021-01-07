@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BillerClientConsole.Models;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using Newtonsoft.Json;
 
 namespace BillerClientConsole.Controllers
@@ -79,7 +79,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.title = "Edit Enquiry";
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var response = await client.GetStringAsync($"{Globals.end_point_fetchEnquiryQuestionByID}?id={id}");
+            var response = await client.GetStringAsync($"{Globals.Globals.end_point_fetchEnquiryQuestionByID}?id={id}");
             dynamic json = JsonConvert.DeserializeObject(response);
             if(json.res=="ok")
             {
@@ -96,7 +96,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "Create Enquiry";
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync($"{Globals.end_point_postBillerInquiryQuestions}", _question).Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsJsonAsync($"{Globals.Globals.end_point_postBillerInquiryQuestions}", _question).Result.Content.ReadAsStringAsync();
             return RedirectToAction("CreateEnquiry");
         }
 
@@ -107,7 +107,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "Create Enquiry";
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync($"{Globals.end_point_UpdateBillerEnquiryByID}", _question).Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsJsonAsync($"{Globals.Globals.end_point_UpdateBillerEnquiryByID}", _question).Result.Content.ReadAsStringAsync();
             return RedirectToAction("ListAllEnquiries");
         }
 
@@ -120,7 +120,7 @@ namespace BillerClientConsole.Controllers
         public async Task<IActionResult> DeleteEnquiryQuestion(int id)
         {
             var client = new HttpClient();
-            var res = await client.PostAsync($"{Globals.end_point_delete_biller_enquiry_by_id}?id={id}",null);
+            var res = await client.PostAsync($"{Globals.Globals.end_point_delete_biller_enquiry_by_id}?id={id}",null);
             return RedirectToAction("ListAllEnquiries");
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using BillerClientConsole.Data;
 using BillerClientConsole.Models;
 using BillerClientConsole.Models.QueryModel;
@@ -273,6 +273,12 @@ namespace BillerClientConsole.Controllers
             if (step == "Step2")
             {
                 var registeredOfficeExists = await client.GetAsync($"{Globals.service_end_point}/RegisteredOffice/{id}").Result.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<RegisteredOffice>(registeredOfficeExists);
+                return View(model);
+            }
+            return NotFound();
+        }
+                var registeredOfficeExists = await client.GetAsync($"{Globals.Globals.service_end_point}/RegisteredOffice/{id}").Result.Content.ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<RegisteredOffice>(registeredOfficeExists);
                 return View(model);
             }

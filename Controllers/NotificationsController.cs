@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using BillerClientConsole.Models;
 using Newtonsoft.Json;
 
@@ -28,7 +28,7 @@ namespace BillerClientConsole.Controllers
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).First();
 
             var client = new HttpClient();
-            var response = await client.GetAsync($"{Globals.end_point_fetchBillerNotifications}?billercode={user.BillerCode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
+            var response = await client.GetAsync($"{Globals.Globals.end_point_fetchBillerNotifications}?billercode={user.BillerCode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
             dynamic jdata = JsonConvert.DeserializeObject(response);
             List<mNotification> notifications = null;
             if (jdata.res == "ok")
@@ -53,7 +53,7 @@ namespace BillerClientConsole.Controllers
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).First();
 
             var client = new HttpClient();
-            var response = await client.GetAsync($"{Globals.end_point_fetchBillerNotifications}?billercode={user.BillerCode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
+            var response = await client.GetAsync($"{Globals.Globals.end_point_fetchBillerNotifications}?billercode={user.BillerCode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
             dynamic jdata = JsonConvert.DeserializeObject(response);
             List<mNotification> notifications = null;
             if (jdata.res == "ok")
@@ -80,7 +80,7 @@ namespace BillerClientConsole.Controllers
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).First();
 
             var client = new HttpClient();
-            var response = await client.GetAsync($"{Globals.end_point_fetchBillerNotifications}?billercode={user.BillerCode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
+            var response = await client.GetAsync($"{Globals.Globals.end_point_fetchBillerNotifications}?billercode={user.BillerCode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
             dynamic jdata = JsonConvert.DeserializeObject(response);
             List<mNotification> notifications = null;
             if (jdata.res == "ok")
@@ -106,7 +106,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.title = "Notification";
 
             var client = new HttpClient();
-            var response = await client.GetAsync($"{Globals.end_point_fetchBillerNotificationById}/?id={id}").Result.Content.ReadAsStringAsync();
+            var response = await client.GetAsync($"{Globals.Globals.end_point_fetchBillerNotificationById}/?id={id}").Result.Content.ReadAsStringAsync();
             dynamic json_data = JsonConvert.DeserializeObject(response);
             if (json_data.res == "ok")
             {
@@ -128,7 +128,7 @@ namespace BillerClientConsole.Controllers
             if (date_to == "-1") date_to = null;
 
             var client = new HttpClient();
-            await client.GetAsync($"{Globals.end_point_markNotificationAsRead}?id={id}");
+            await client.GetAsync($"{Globals.Globals.end_point_markNotificationAsRead}?id={id}");
             ViewBag.date_from = date_from;
             ViewBag.date_to = date_to;
             return RedirectToAction(view, "Notifications", new { date_from, date_to });
@@ -140,7 +140,7 @@ namespace BillerClientConsole.Controllers
             if (date_from == "-1") date_from = null;
             if (date_to == "-1") date_to = null;
             var client = new HttpClient();
-            await client.GetAsync($"{Globals.end_point_markNotificationAsUnRead}?id={id}");
+            await client.GetAsync($"{Globals.Globals.end_point_markNotificationAsUnRead}?id={id}");
             ViewBag.date_from = date_from;
             ViewBag.date_to = date_to;
             return RedirectToAction(view, "Notifications", new { date_from, date_to });
@@ -154,7 +154,7 @@ namespace BillerClientConsole.Controllers
             if (date_from == "-1") date_from = null;
             if (date_to == "-1") date_to = null;
             var client = new HttpClient();
-            var response = await client.PostAsync($"{Globals.end_point_deleteNotificationById}?id={id}",null).Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsync($"{Globals.Globals.end_point_deleteNotificationById}?id={id}",null).Result.Content.ReadAsStringAsync();
             ViewBag.date_from = date_from;
             ViewBag.date_to = date_to;
             return RedirectToAction(view, "Notifications", new { date_from, date_to });

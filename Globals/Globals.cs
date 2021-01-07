@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace BillerClientConsole._Globals
+namespace BillerClientConsole.Globals
 {
     public class Globals
     {

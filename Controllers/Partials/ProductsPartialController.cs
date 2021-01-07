@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using BillerClientConsole.Models;
 using Newtonsoft.Json;
 using X.PagedList;
@@ -34,7 +34,7 @@ namespace BillerClientConsole.Controllers.Partials
             var db = new dbContext();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_get_name_searches_by_id}?ID={id}").Result.Content.ReadAsStringAsync();
+            var res = await client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_id}?ID={id}").Result.Content.ReadAsStringAsync();
             db.Dispose();
             dynamic json_data = JsonConvert.DeserializeObject(res);
 

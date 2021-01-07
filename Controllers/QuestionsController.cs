@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BillerClientConsole.Models;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using Newtonsoft.Json;
 using Webdev.Payments;
 using Syncfusion.EJ2.Base;
@@ -51,7 +51,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.title = "New Company Registration";
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var resp = await client.GetAsync($"{Globals.service_end_point}/Names/{ user.Email}/GetUnusedNames").Result.Content.ReadAsStringAsync();
+            var resp = await client.GetAsync($"{Globals.Globals.service_end_point}/Names/{ user.Email}/GetUnusedNames").Result.Content.ReadAsStringAsync();
             dynamic json_data = JsonConvert.DeserializeObject(resp);
            
             var data = json_data.data.value;
@@ -97,7 +97,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.title = "New Company Registration";
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var resp = await client.GetAsync($"{Globals.end_point_get_name_searches_by_user_v1}?UserID={user.Email}").Result.Content.ReadAsStringAsync();
+            var resp = await client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_user_v1}?UserID={user.Email}").Result.Content.ReadAsStringAsync();
             dynamic json_data = JsonConvert.DeserializeObject(resp);
 
             var data = json_data.data.value;
@@ -141,7 +141,7 @@ namespace BillerClientConsole.Controllers
 
             var client = new HttpClient();
 
-            var res = client.GetAsync($"{Globals.end_point_get_name_searches_by_search_id}?ID={searchId}").Result.Content.ReadAsStringAsync().Result;
+            var res = client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_search_id}?ID={searchId}").Result.Content.ReadAsStringAsync().Result;
             dynamic data_j = JsonConvert.DeserializeObject(res);
             var searchNames = data_j.data.value[0].searchInfo;
             var nameSearch = data_j.data.value[0];
@@ -180,7 +180,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "New Company Application";
             //var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
+            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
             member = new List<MemberDto>();
             entityMember = new List<MemberDto>();
             objects = new List<mmainClause>();
@@ -205,7 +205,7 @@ namespace BillerClientConsole.Controllers
         //    pvt.Mobile = companyInfo.mobileNumber;
         //    pvt.Email = companyInfo.emailAddress;
         //    //var client = new HttpClient();
-        //    //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
+        //    //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
         //    return RedirectToAction("CompanyMemo");
         //}
 
@@ -219,7 +219,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "New Company Application";
             //var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
+            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
             return RedirectToAction("CompanyMembers");
         }
 
@@ -233,7 +233,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "New Company Application";
             //var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
+            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
             return View();
         }
 
@@ -265,7 +265,7 @@ namespace BillerClientConsole.Controllers
         //        Objectives.Add(otherClause);
         //    }
         //    //var client = new HttpClient();
-        //    //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
+        //    //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
         //    return View();
         //}
 
@@ -336,7 +336,7 @@ namespace BillerClientConsole.Controllers
 
 
             //var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
+            //var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_postBillerProduct}", product).Result.Content.ReadAsStringAsync();
             return RedirectToAction("CompanyDirectors");
         }
 
@@ -350,7 +350,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "View Question Details";
             var client = new HttpClient();
-            var response = client.GetAsync($"{Globals.end_point_fetchBillerProductById}?id={id}").Result.Content.ReadAsStringAsync().Result;
+            var response = client.GetAsync($"{Globals.Globals.end_point_fetchBillerProductById}?id={id}").Result.Content.ReadAsStringAsync().Result;
             ViewBag.product = JsonConvert.DeserializeObject(response);
             return View();
         }
@@ -471,7 +471,7 @@ namespace BillerClientConsole.Controllers
 
 
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<Co>($"{Globals.end_point_post_company_application}", Company).Result.Content.ReadAsStringAsync();
+            //var response = await client.PostAsJsonAsync<Co>($"{Globals.Globals.end_point_post_company_application}", Company).Result.Content.ReadAsStringAsync();
             //var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).First();
             ////ajax reports is in partial controllers
             // TempData["loadUrl"] = $"/ajax/products/CompanyDirectors";
@@ -515,7 +515,7 @@ namespace BillerClientConsole.Controllers
         public async Task<IActionResult> UpdateQuestion(mProductOffline product)
         {
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_updateBillerProduct}", product);
+            var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_updateBillerProduct}", product);
             return RedirectToAction("ListBillerQuestions");
         }
 
@@ -527,7 +527,7 @@ namespace BillerClientConsole.Controllers
         {
 
             var client = new HttpClient();
-            var resp = await client.GetAsync($"{Globals.end_point_DeleteProductBillerProductById}?id={id}");
+            var resp = await client.GetAsync($"{Globals.Globals.end_point_DeleteProductBillerProductById}?id={id}");
             return RedirectToAction("ListBillerQuestions");
         }
 
@@ -562,8 +562,8 @@ namespace BillerClientConsole.Controllers
             switch (companyInformation.step)
             {
                 case 1:
-                    var response = await client.GetAsync($"{Globals.end_point_get_name_searches_by_id}?ID={companyInformation.Search_Ref}").Result.Content.ReadAsStringAsync();
-                    var rhisponzi = await client.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={companyInformation.Reference}").Result.Content.ReadAsStringAsync();
+                    var response = await client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_id}?ID={companyInformation.Search_Ref}").Result.Content.ReadAsStringAsync();
+                    var rhisponzi = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={companyInformation.Reference}").Result.Content.ReadAsStringAsync();
 
                     mCompanyResponse stepInfo = new mCompanyResponse();
 
@@ -583,62 +583,62 @@ namespace BillerClientConsole.Controllers
                     var data = json_data.data.value[0];
                     mSearch nameSearch = JsonConvert.DeserializeObject<mSearch>(data.ToString());
 
-                    Globals.toBePaid = nameSearch.searchInfo.SearchRef;
+                    Globals.Globals.toBePaid = nameSearch.searchInfo.SearchRef;
 
                     var search = JsonConvert.SerializeObject(nameSearch);
-                    Globals.companyInfo.Search_Ref = nameSearch.searchInfo.search_ID;
+                    Globals.Globals.companyInfo.Search_Ref = nameSearch.searchInfo.search_ID;
                     foreach (mSearchNames name in nameSearch.SearchNames)
                     {
                         if (name.Status == "Reserved")
                         {
-                            Globals.companyInfo.Search_Name_ID = name.Name_ID;
-                            Globals.companyInfo.Name = name.Name;
+                            Globals.Globals.companyInfo.Search_Name_ID = name.Name_ID;
+                            Globals.Globals.companyInfo.Name = name.Name;
                             break;
                         }
                     }
-                    Globals.companyInfo.Type = nameSearch.searchInfo.Search_For;
-                    Globals.companyInfo.Status = "Saved";
-                    Globals.companyInfo.Search_Ref = nameSearch.searchInfo.SearchRef;
+                    Globals.Globals.companyInfo.Type = nameSearch.searchInfo.Search_For;
+                    Globals.Globals.companyInfo.Status = "Saved";
+                    Globals.Globals.companyInfo.Search_Ref = nameSearch.searchInfo.SearchRef;
                     //companyInfo = companyInformation;
                     DateTime ikozvino = DateTime.Now;
-                    Globals.companyInfo.Date_Of_Application = ikozvino.ToString();
-                    Globals.companyInfo.Application_Ref = Guid.NewGuid().ToString();
-                    Globals.companyInfo.Payment = "Paid";
+                    Globals.Globals.companyInfo.Date_Of_Application = ikozvino.ToString();
+                    Globals.Globals.companyInfo.Application_Ref = Guid.NewGuid().ToString();
+                    Globals.Globals.companyInfo.Payment = "Paid";
                     var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-                    Globals.companyInfo.AppliedBy = user.Email;
+                    Globals.Globals.companyInfo.AppliedBy = user.Email;
 
                     mCompany NewCompany = new mCompany();
-                    NewCompany.CompanyInfo = Globals.companyInfo;
-                    var res = await client.PostAsJsonAsync<mCompany>($"{Globals.end_point_post_company_application}", NewCompany).Result.Content.ReadAsStringAsync();
+                    NewCompany.CompanyInfo = Globals.Globals.companyInfo;
+                    var res = await client.PostAsJsonAsync<mCompany>($"{Globals.Globals.end_point_post_company_application}", NewCompany).Result.Content.ReadAsStringAsync();
                     return Json(new
                     {
                         refrence = companyInformation.Search_Ref,
-                        reservedName = Globals.companyInfo.Name,
-                        type = Globals.companyInfo.Type,
+                        reservedName = Globals.Globals.companyInfo.Name,
+                        type = Globals.Globals.companyInfo.Type,
                         objective = nameSearch.searchInfo.Purpose,
                         stepInfor = stepInfo
                     });
                 case 2:
-                    Globals.companyInfo.Email = companyInformation.Email;
-                    Globals.companyInfo.Registered_Address = companyInformation.Registered_Address;
-                    Globals.companyInfo.City = companyInformation.City;
-                    Globals.companyInfo.MobileNumber = companyInformation.MobileNumber;
-                    Globals.companyInfo.PostalAddress = companyInformation.PostalAddress;
-                    Globals.companyInfo.Telephone = companyInformation.Telephone;
-                    //Globals.companyInfo.Telephone = companyInformation.Telephone;
-                    //Globals.companyInfo.TelephoneExt = companyInformation.TelephoneExt;
-                    //Globals.companyInfo.MobileNumber = companyInformation.MobileNumber;
+                    Globals.Globals.companyInfo.Email = companyInformation.Email;
+                    Globals.Globals.companyInfo.Registered_Address = companyInformation.Registered_Address;
+                    Globals.Globals.companyInfo.City = companyInformation.City;
+                    Globals.Globals.companyInfo.MobileNumber = companyInformation.MobileNumber;
+                    Globals.Globals.companyInfo.PostalAddress = companyInformation.PostalAddress;
+                    Globals.Globals.companyInfo.Telephone = companyInformation.Telephone;
+                    //Globals.Globals.companyInfo.Telephone = companyInformation.Telephone;
+                    //Globals.Globals.companyInfo.TelephoneExt = companyInformation.TelephoneExt;
+                    //Globals.Globals.companyInfo.MobileNumber = companyInformation.MobileNumber;
                     mCompany NewCompanyy = new mCompany();
-                    NewCompanyy.CompanyInfo = Globals.companyInfo;
+                    NewCompanyy.CompanyInfo = Globals.Globals.companyInfo;
                     NewCompanyy.CompanyInfo.step = companyInformation.step;
-                    var resp = await client.PostAsJsonAsync<mCompany>($"{Globals.end_point_post_company_application}", NewCompanyy).Result.Content.ReadAsStringAsync();
+                    var resp = await client.PostAsJsonAsync<mCompany>($"{Globals.Globals.end_point_post_company_application}", NewCompanyy).Result.Content.ReadAsStringAsync();
                     var b = 0;
                     break;
                 case 3:
                     //mMemorandum memorandum = new mMemorandum();
                     //memorandum.memostep = companyInformation.step;
                     //memorandum._id = Guid.NewGuid().ToString();
-                    //memorandum.Application_Ref = Globals.companyInfo.Application_Ref;
+                    //memorandum.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
                     //memorandum.liabilityClause = companyInformation.liabilityClause;
                     //memorandum.sharesClause = companyInformation.shareClause;
 
@@ -684,17 +684,17 @@ namespace BillerClientConsole.Controllers
                     //        objects.Add(clause);
                     //    }
                     //}
-                    //Globals.objects = objects;
+                    //Globals.Globals.objects = objects;
                     //memorandum.objects = objects;
                     //PostMemo postMemo = new PostMemo();
                     //postMemo.memo = memorandum;
                     //postMemo.step = companyInformation.step;
-                    //var respo = await client.PostAsJsonAsync<PostMemo>($"{Globals.end_point_post_company_application_memo}", postMemo).Result.Content.ReadAsStringAsync();
+                    //var respo = await client.PostAsJsonAsync<PostMemo>($"{Globals.Globals.end_point_post_company_application_memo}", postMemo).Result.Content.ReadAsStringAsync();
                     break;
                 case 4:
                     mArticles articles = new mArticles();
                     articles._id = Guid.NewGuid().ToString();
-                    articles.Application_Ref = Globals.companyInfo.Application_Ref;
+                    articles.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
 
                     if (companyInformation.Article.Contains("Table B"))
                         articles.articles_type = "Table B";
@@ -708,11 +708,11 @@ namespace BillerClientConsole.Controllers
                     postArt.Articles = articles;
                     postArt.step = companyInformation.step;
 
-                    var respopo = await client.PostAsJsonAsync<postArticles>($"{Globals.service_end_point}/api/v1/{companyInformation.Application_Ref}/postCompanyApplicationArticles", postArt).Result.Content.ReadAsStringAsync();
+                    var respopo = await client.PostAsJsonAsync<postArticles>($"{Globals.Globals.service_end_point}/api/v1/{companyInformation.Application_Ref}/postCompanyApplicationArticles", postArt).Result.Content.ReadAsStringAsync();
                     var g = 0;
-                    //Globals.companyInfo.TableB = companyInformation.TableB;
-                    //Globals.companyInfo.TableC = companyInformation.Ta
-                    //Globals.companyInfo.Ammended = companyInformation.Ammended;
+                    //Globals.Globals.companyInfo.TableB = companyInformation.TableB;
+                    //Globals.Globals.companyInfo.TableC = companyInformation.Ta
+                    //Globals.Globals.companyInfo.Ammended = companyInformation.Ammended;
                     break;
                 case 5:
                     string[] singleMembers = companyInformation.Members.Split('|');
@@ -747,7 +747,7 @@ namespace BillerClientConsole.Controllers
 
 
                         pot.member_id = memb.member_id;
-                        pot.Application_Ref = Globals.companyInfo.Application_Ref;
+                        pot.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
                         if (membr[roleIndex] == "Member")
                         {
                             pot.IsMember = 1;
@@ -794,7 +794,7 @@ namespace BillerClientConsole.Controllers
                         memberEntity.memberType = "Entity";
 
                         mMembersPotifolio potifolio = new mMembersPotifolio();
-                        potifolio.Application_Ref = Globals.companyInfo.Application_Ref;
+                        potifolio.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
                         potifolio.member_id = memberEntity.member_id;
                         potifolio.number_of_shares = int.Parse(companyMember[3]) + int.Parse(companyMember[4]);
                         potifolio.IsMember = 1;
@@ -804,12 +804,12 @@ namespace BillerClientConsole.Controllers
                     }
 
                     PostMembers postMembers = new PostMembers();
-                    postMembers._id = Globals.companyInfo.Application_Ref;
+                    postMembers._id = Globals.Globals.companyInfo.Application_Ref;
                     postMembers.step = companyInformation.step.ToString();
                     postMembers.members = members;
                     postMembers.membersPotifolio = potfolio;
 
-                    var respopopo = await client.PostAsJsonAsync<PostMembers>($"{Globals.end_point_post_company_application_members}", postMembers).Result.Content.ReadAsStringAsync();
+                    var respopopo = await client.PostAsJsonAsync<PostMembers>($"{Globals.Globals.end_point_post_company_application_members}", postMembers).Result.Content.ReadAsStringAsync();
 
 
                     string paymentLink = SetupPayment(searchReferenzi);
@@ -828,7 +828,7 @@ namespace BillerClientConsole.Controllers
                     //    int preferenceShares = int.Parse(member[6]);
                     //    int totalShares = ordinaryShares + preferenceShares;
                     //    mmber.number_of_shares = totalShares;
-                    //    Globals.members.Add(mmber);
+                    //    Globals.Globals.members.Add(mmber);
                     //}
 
                     //string[] singleCompanyMember = companyInformation.MemberEntities.Split('|');
@@ -853,7 +853,7 @@ namespace BillerClientConsole.Controllers
                     //    int preferenceShares = int.Parse(member[4]);
                     //    int totalShares = ordinaryShares + preferenceShares;
                     //    mmber.number_of_shares = totalShares;
-                    //    Globals.members.Add(mmber);
+                    //    Globals.Globals.members.Add(mmber);
                     //}
 
                     break;
@@ -885,8 +885,8 @@ namespace BillerClientConsole.Controllers
         {
             var client = new HttpClient();
             string searchReferenzi = "";
-            var response = await client.GetAsync($"{Globals.end_point_get_name_searches_by_id}?ID={nameId}").Result.Content.ReadAsStringAsync();
-            var rhisponzi = await client.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={applicationid}").Result.Content.ReadAsStringAsync();
+            var response = await client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_id}?ID={nameId}").Result.Content.ReadAsStringAsync();
+            var rhisponzi = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={applicationid}").Result.Content.ReadAsStringAsync();
 
             mCompanyResponse stepInfo = new mCompanyResponse();
 
@@ -906,33 +906,33 @@ namespace BillerClientConsole.Controllers
             var data = json_data.data.value;
             mSearch nameSearch = JsonConvert.DeserializeObject<mSearch>(data.ToString());
 
-            Globals.toBePaid = nameSearch.searchInfo.SearchRef;
+            Globals.Globals.toBePaid = nameSearch.searchInfo.SearchRef;
 
             var search = JsonConvert.SerializeObject(nameSearch);
-            Globals.companyInfo.Search_Ref = nameSearch.searchInfo.search_ID;
+            Globals.Globals.companyInfo.Search_Ref = nameSearch.searchInfo.search_ID;
             foreach (mSearchNames name in nameSearch.SearchNames)
             {
                 if (name.Status == "Reserved")
                 {
-                    Globals.companyInfo.Search_Name_ID = name.Name_ID;
-                    Globals.companyInfo.Name = name.Name;
+                    Globals.Globals.companyInfo.Search_Name_ID = name.Name_ID;
+                    Globals.Globals.companyInfo.Name = name.Name;
                     break;
                 }
             }
-            Globals.companyInfo.Type = nameSearch.searchInfo.Search_For;
-            Globals.companyInfo.Status = "Saved";
-            Globals.companyInfo.Search_Ref = nameSearch.searchInfo.SearchRef;
+            Globals.Globals.companyInfo.Type = nameSearch.searchInfo.Search_For;
+            Globals.Globals.companyInfo.Status = "Saved";
+            Globals.Globals.companyInfo.Search_Ref = nameSearch.searchInfo.SearchRef;
             //companyInfo = companyInformation;
             DateTime ikozvino = DateTime.Now;
-            Globals.companyInfo.Date_Of_Application = ikozvino.ToString();
-            Globals.companyInfo.Application_Ref = Guid.NewGuid().ToString();
-            Globals.companyInfo.Payment = "Paid";
+            Globals.Globals.companyInfo.Date_Of_Application = ikozvino.ToString();
+            Globals.Globals.companyInfo.Application_Ref = Guid.NewGuid().ToString();
+            Globals.Globals.companyInfo.Payment = "Paid";
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-            Globals.companyInfo.AppliedBy = user.Email;
+            Globals.Globals.companyInfo.AppliedBy = user.Email;
 
             mCompany NewCompany = new mCompany();
-            NewCompany.CompanyInfo = Globals.companyInfo;
-            var res = await client.PostAsJsonAsync<mCompany>($"{Globals.end_point_post_company_application}", NewCompany).Result.Content.ReadAsStringAsync();
+            NewCompany.CompanyInfo = Globals.Globals.companyInfo;
+            var res = await client.PostAsJsonAsync<mCompany>($"{Globals.Globals.end_point_post_company_application}", NewCompany).Result.Content.ReadAsStringAsync();
             return Ok(NewCompany.CompanyInfo.Search_Ref);
         }
 
@@ -944,7 +944,7 @@ namespace BillerClientConsole.Controllers
             var paynow = new Paynow("9945", "1a42766b-1fea-48f6-ac39-1484dddfeb62");
 
             paynow.ResultUrl = "http://example.com/gateways/paynow/update";
-            paynow.ReturnUrl = $"http://localhost:2015/Company/CompanyPayment?searchRef={Globals.toBePaid}";
+            paynow.ReturnUrl = $"http://localhost:2015/Company/CompanyPayment?searchRef={Globals.Globals.toBePaid}";
             
             var payment = paynow.CreatePayment(Guid.NewGuid().ToString(), "brightonkofu@outlook.com");
 
@@ -962,8 +962,8 @@ namespace BillerClientConsole.Controllers
                 var status = paynow.PollTransaction(pollUrl);
 
                 ViewBag.Paid = "false";
-                Globals.payment = paynow;
-                Globals.response = response;
+                Globals.Globals.payment = paynow;
+                Globals.Globals.response = response;
             }
 
             return uri;
@@ -972,22 +972,22 @@ namespace BillerClientConsole.Controllers
         [HttpGet("CompanyPayment")]
         public async Task<IActionResult> CompanyApplicationPaid(string searchRef)
         {
-            var payment = Globals.payment;
-            var responsey = Globals.response;
+            var payment = Globals.Globals.payment;
+            var responsey = Globals.Globals.response;
             ViewBag.title = "Payment";
             var status = payment.PollTransaction(responsey.PollUrl());
             if (status.Paid())
             {
                 var client = new HttpClient();
 
-                var rhisponzi = await client.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={searchRef}").Result.Content.ReadAsStringAsync();
+                var rhisponzi = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={searchRef}").Result.Content.ReadAsStringAsync();
 
                 mCompanyResponse stepInfo = new mCompanyResponse();
                 dynamic json_step_data = JsonConvert.DeserializeObject(rhisponzi);
                 var datadata = json_step_data.data.value;
                 stepInfo = JsonConvert.DeserializeObject<mCompanyResponse>(datadata.ToString());
 
-                var response = await client.PostAsJsonAsync<mCompanyResponse>($"{Globals.end_point_paid_company_application}", stepInfo).Result.Content.ReadAsStringAsync();
+                var response = await client.PostAsJsonAsync<mCompanyResponse>($"{Globals.Globals.end_point_paid_company_application}", stepInfo).Result.Content.ReadAsStringAsync();
 
                 ViewBag.Payment = status.Amount;
                 ViewBag.RefNumber = status.Reference;
@@ -1008,7 +1008,7 @@ namespace BillerClientConsole.Controllers
             )
         {
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<string>($"{Globals.end_point_updateBillerProduct}",null);
+            //var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_updateBillerProduct}",null);
             return Json(new
             {
                 res = "ok"
@@ -1020,7 +1020,7 @@ namespace BillerClientConsole.Controllers
         public JsonResult SubmitObjectives(string objectives)
         {
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<string>($"{Globals.end_point_updateBillerProduct}",null);
+            //var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_updateBillerProduct}",null);
             return Json(new
             {
                 res = "ok"
@@ -1032,7 +1032,7 @@ namespace BillerClientConsole.Controllers
         public JsonResult SubmitEntityMembers(string objectives)
         {
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<string>($"{Globals.end_point_updateBillerProduct}", null);
+            //var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_updateBillerProduct}", null);
             return Json(new
             {
                 res = "ok"
@@ -1044,7 +1044,7 @@ namespace BillerClientConsole.Controllers
         public JsonResult Articles(string objectives)
         {
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<string>($"{Globals.end_point_updateBillerProduct}", null);
+            //var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_updateBillerProduct}", null);
             return Json(new
             {
                 res = "ok"
@@ -1056,7 +1056,7 @@ namespace BillerClientConsole.Controllers
         public JsonResult SubmitMembers(string objectives)
         {
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<string>($"{Globals.end_point_updateBillerProduct}", null);
+            //var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_updateBillerProduct}", null);
             return Json(new
             {
                 res = "ok"
@@ -1068,7 +1068,7 @@ namespace BillerClientConsole.Controllers
         public JsonResult SubmitDirectors(string objectives)
         {
             var client = new HttpClient();
-            //var response = await client.PostAsJsonAsync<string>($"{Globals.end_point_updateBillerProduct}", null);
+            //var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_updateBillerProduct}", null);
             return Json(new
             {
                 res = "ok"
@@ -1190,7 +1190,7 @@ namespace BillerClientConsole.Controllers
             //mMeMorandum memorandum = new mMeMorandum();
             //memorandum.memostep = step;
             //memorandum._id = Guid.NewGuid().ToString();
-            //memorandum.Application_Ref = Globals.companyInfo.Application_Ref;
+            //memorandum.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
             //liabilityClause liabilityClause = new liabilityClause();
             //liabilityClause.description = liab;
             //memorandum.LiabilityClause.Add(liabilityClause);
@@ -1209,7 +1209,7 @@ namespace BillerClientConsole.Controllers
 
 
             PostmMemorandum memo = new PostmMemorandum();
-            memo.Application_Ref = Globals.companyInfo.Application_Ref;
+            memo.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
             memo._id = Guid.NewGuid().ToString();
 
             liabilityClause liabilityClause = new liabilityClause
@@ -1233,7 +1233,7 @@ namespace BillerClientConsole.Controllers
             {
                 objecty.memo_id = memo._id;
                 objecty._id = Guid.NewGuid().ToString();
-                objecty.Application_Ref = Globals.companyInfo.Application_Ref;
+                objecty.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
 
                 if (objectiveType == 0)
                 {
@@ -1252,7 +1252,7 @@ namespace BillerClientConsole.Controllers
             postMemo.step = step;
             postMemo.memo = memo;
 
-            var respo = await client.PostAsJsonAsync<PostMemo>($"{Globals.end_point_post_company_application_memo}", postMemo).Result.Content.ReadAsStringAsync();
+            var respo = await client.PostAsJsonAsync<PostMemo>($"{Globals.Globals.end_point_post_company_application_memo}", postMemo).Result.Content.ReadAsStringAsync();
             return Json(objects);
         }
 
@@ -1361,7 +1361,7 @@ namespace BillerClientConsole.Controllers
                 EmailAddress = dto.EmailAddress
                 
             };
-            var respopopo = await client.PostAsJsonAsync<RegisteredOffice>($"{Globals.service_end_point}/PvtRegistration/{dto.AppicationId}/RegisterOffice", office).Result.Content.ReadAsStringAsync();
+            var respopopo = await client.PostAsJsonAsync<RegisteredOffice>($"{Globals.Globals.service_end_point}/PvtRegistration/{dto.AppicationId}/RegisterOffice", office).Result.Content.ReadAsStringAsync();
             return Ok();
         }
 
@@ -1387,7 +1387,7 @@ namespace BillerClientConsole.Controllers
                 memb.Nationality = memberrr.Nationality;
 
                 folio = new mMembersPotifolio();
-                folio.Application_Ref = Globals.companyInfo.Application_Ref;
+                folio.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
                 folio.member_id = memb.member_id;
 
                 //string[] roles = memberrr.Role.Split(',');
@@ -1427,7 +1427,7 @@ namespace BillerClientConsole.Controllers
                 memb.memberType = "Entity";
 
                 folio = new mMembersPotifolio();
-                folio.Application_Ref = Globals.companyInfo.Application_Ref;
+                folio.Application_Ref = Globals.Globals.companyInfo.Application_Ref;
                 folio.member_id = memb.member_id;
                 folio.company_member_id = memb.member_id;
                 folio.IsMember = 1;
@@ -1441,14 +1441,14 @@ namespace BillerClientConsole.Controllers
             }
 
             PostMembers postMembers = new PostMembers();
-            postMembers._id = Globals.companyInfo.Application_Ref;
+            postMembers._id = Globals.Globals.companyInfo.Application_Ref;
             int stepi = 5;
             postMembers.step = stepi.ToString();
             postMembers.members = members;
             postMembers.membersPotifolio = potifolios;
 
             var client = new HttpClient();
-            var respopopo = await client.PostAsJsonAsync<PostMembers>($"{Globals.end_point_post_company_application_members}", postMembers).Result.Content.ReadAsStringAsync();
+            var respopopo = await client.PostAsJsonAsync<PostMembers>($"{Globals.Globals.end_point_post_company_application_members}", postMembers).Result.Content.ReadAsStringAsync();
 
             string paymentLink = SetupPayment("");
 
@@ -1482,7 +1482,7 @@ namespace BillerClientConsole.Controllers
             
             var client = new HttpClient();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-            var companyApplication = await client.GetAsync($"{Globals.end_point_get_company_application_by_application_ref}?ApplicationRef="+applicationId).Result.Content.ReadAsStringAsync();
+            var companyApplication = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_application_ref}?ApplicationRef="+applicationId).Result.Content.ReadAsStringAsync();
             var res1 = JsonConvert.DeserializeObject(companyApplication);
             ///var CompInfo = res1.data.value[0].companyInfo;
 
@@ -1496,7 +1496,7 @@ namespace BillerClientConsole.Controllers
             {
                 //Code to Send email to user
                 //Code to update the Company info
-                var update = await client.GetAsync($"{Globals.end_point_post_update_companyinfo}/" + applicationId);
+                var update = await client.GetAsync($"{Globals.Globals.end_point_post_update_companyinfo}/" + applicationId);
                 if (update.IsSuccessStatusCode)
                 {
                     //Code to Send email to user
@@ -1544,7 +1544,7 @@ namespace BillerClientConsole.Controllers
             }
             else
             {
-                var resolve = await client.GetAsync($"{Globals.end_point_resolveQuery_companyinfo}/{applicationId}");
+                var resolve = await client.GetAsync($"{Globals.Globals.end_point_resolveQuery_companyinfo}/{applicationId}");
                 if (resolve.IsSuccessStatusCode)
                 {
                     var email ="email2";// user.Email;
@@ -1584,10 +1584,10 @@ namespace BillerClientConsole.Controllers
 
 
                 //Code to do Query Verification on the incoming ApplicationId
-                //var result = await client.GetAsync($"{Globals.end_point_get_queries}").Result.Content.ReadAsStringAsync();
+                //var result = await client.GetAsync($"{Globals.Globals.end_point_get_queries}").Result.Content.ReadAsStringAsync();
                 //// var res= result.Content.ReadAsStringAsync();
                 //var queries = JsonConvert.DeserializeObject<IEnumerable<mQuery>>(result).ToList();
-                var response = await client.PostAsJsonAsync<string>($"{Globals.service_end_point}/PvtRegistration/{applicationId}/Approve", user.Email).Result.Content.ReadAsStringAsync();
+                var response = await client.PostAsJsonAsync<string>($"{Globals.Globals.service_end_point}/PvtRegistration/{applicationId}/Approve", user.Email).Result.Content.ReadAsStringAsync();
                 return Ok();
             }
            
@@ -1620,8 +1620,8 @@ namespace BillerClientConsole.Controllers
                 var status = paynow.PollTransaction(pollUrl);
 
                 ViewBag.Paid = "false";
-                Globals.payment = paynow;
-                Globals.response = response;
+                Globals.Globals.payment = paynow;
+                Globals.Globals.response = response;
             }
 
             return uri;

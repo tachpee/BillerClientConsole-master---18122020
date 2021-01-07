@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BillerClientConsole.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using Newtonsoft.Json;
 using BillerClientConsole.Models.QueryModel;
 using BillerClientConsole.Data;
@@ -40,9 +40,9 @@ namespace BillerClientConsole.Controllers
             var client = new HttpClient();
 
             //notifications
-            //var notifications_read = await client.GetAsync($"{Globals.end_point_countReadNotificationsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
-            //var notifications_un_read = await client.GetAsync($"{Globals.end_point_countUnReadNotificationsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
-            //var notifications_total = await client.GetAsync($"{Globals.end_point_countAllNotificationsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var notifications_read = await client.GetAsync($"{Globals.Globals.end_point_countReadNotificationsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var notifications_un_read = await client.GetAsync($"{Globals.Globals.end_point_countUnReadNotificationsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var notifications_total = await client.GetAsync($"{Globals.Globals.end_point_countAllNotificationsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
 
             ViewBag.notifications_read = 0;
             ViewBag.notifications_un_read = 0;
@@ -50,9 +50,9 @@ namespace BillerClientConsole.Controllers
             
             
             //products
-            //var products_active = await client.GetAsync($"{Globals.end_point_countAllActiveProductsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
-            //var products_in_active = await client.GetAsync($"{Globals.end_point_countAllInActiveProductsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
-            //var products_total = await client.GetAsync($"{Globals.end_point_countAllProductsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var products_active = await client.GetAsync($"{Globals.Globals.end_point_countAllActiveProductsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var products_in_active = await client.GetAsync($"{Globals.Globals.end_point_countAllInActiveProductsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var products_total = await client.GetAsync($"{Globals.Globals.end_point_countAllProductsForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
 
             ViewBag.products_active = 0;
             ViewBag.products_in_active = 0;
@@ -60,15 +60,15 @@ namespace BillerClientConsole.Controllers
 
 
             //transactions and payments
-            //var payment_history = await client.GetAsync($"{Globals.end_point_countAllPaymentHistoryForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
-            //var transaction_history = await client.GetAsync($"{Globals.end_point_countAllTransactionHistoryForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var payment_history = await client.GetAsync($"{Globals.Globals.end_point_countAllPaymentHistoryForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var transaction_history = await client.GetAsync($"{Globals.Globals.end_point_countAllTransactionHistoryForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
 
             ViewBag.payment_history = 0;
             ViewBag.transaction_history = 0;
 
              //feedback
-            // read_feedback = await client.GetAsync($"{Globals.end_point_countAllReadFeedBackForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
-            //var un_read_feedback = await client.GetAsync($"{Globals.end_point_countAllUnReadFeedBackForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            // read_feedback = await client.GetAsync($"{Globals.Globals.end_point_countAllReadFeedBackForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
+            //var un_read_feedback = await client.GetAsync($"{Globals.Globals.end_point_countAllUnReadFeedBackForBiller}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync();
 
             ViewBag.read_feedback = 0;
             ViewBag.un_read_feedback = 0;
@@ -85,7 +85,7 @@ namespace BillerClientConsole.Controllers
 
             //var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             //var client = new HttpClient();
-            //var res = await client.GetAsync($"{Globals.end_point_get_company_applications}").Result.Content.ReadAsStringAsync();
+            //var res = await client.GetAsync($"{Globals.Globals.end_point_get_company_applications}").Result.Content.ReadAsStringAsync();
             //db.Dispose();
             //dynamic json_data = JsonConvert.DeserializeObject(res);
 
@@ -124,7 +124,7 @@ namespace BillerClientConsole.Controllers
             //ViewBag.datasource = rejesteredCompanies;
             //ViewBag.companyApplication = pendingCompanies;
 
-            //var resp = await client.GetAsync($"{Globals.end_point_get_name_searches_by_user_v1}?UserID={user.Email}").Result.Content.ReadAsStringAsync();
+            //var resp = await client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_user_v1}?UserID={user.Email}").Result.Content.ReadAsStringAsync();
             //json_data = JsonConvert.DeserializeObject(resp);
 
             //data = json_data.data.value;
@@ -137,7 +137,7 @@ namespace BillerClientConsole.Controllers
             //}
 
             //ViewBag.nameSearches = nameSearchSummary;
-            var resp = await client.GetAsync($"{Globals.end_point_get_name_searches_by_user_v1}?UserID={user.UserName}").Result.Content.ReadAsStringAsync();
+            var resp = await client.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_user_v1}?UserID={user.UserName}").Result.Content.ReadAsStringAsync();
 
             dynamic json_data = JsonConvert.DeserializeObject(resp);
 
@@ -154,15 +154,15 @@ namespace BillerClientConsole.Controllers
             nameSearchSummary = nameSearchSummary.OrderByDescending(z => z.SearchRef).ToList();
             ViewBag.nameSearches = nameSearchSummary;
 
-            var responsey = await client.GetAsync($"{Globals.end_point_get_company_application_by_user_id}?UserID={user.UserName}").Result.Content.ReadAsStringAsync();
+            var responsey = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_user_id}?UserID={user.UserName}").Result.Content.ReadAsStringAsync();
             dynamic json_dataa = JsonConvert.DeserializeObject(responsey);
             var dataa = json_dataa.data.value;
             List<mCompanyResponse> companyApplications = JsonConvert.DeserializeObject<List<mCompanyResponse>>(dataa.ToString());
             companyApplications = companyApplications.OrderByDescending(x=> x.companyInfo.Date_Of_Application).ToList();
 
             
-            var paymentsHistory = await client.GetAsync($"{Globals.end_point_payment}{user.UserName}").Result.Content.ReadAsStringAsync();
-            var creditsHistory = await client.GetAsync($"{Globals.end_point_payments_credits}{user.UserName}").Result.Content.ReadAsStringAsync();
+            var paymentsHistory = await client.GetAsync($"{Globals.Globals.end_point_payment}{user.UserName}").Result.Content.ReadAsStringAsync();
+            var creditsHistory = await client.GetAsync($"{Globals.Globals.end_point_payments_credits}{user.UserName}").Result.Content.ReadAsStringAsync();
 
             dynamic hist_data = JsonConvert.DeserializeObject(paymentsHistory);
             PaymentsResponse response = JsonConvert.DeserializeObject<PaymentsResponse>(hist_data.ToString());
@@ -180,7 +180,7 @@ namespace BillerClientConsole.Controllers
                 response.Payments = newPayments;
             }
 
-            var regEntitiesSummaryResponse = await client.GetAsync($"{Globals.service_end_point}/{user.UserName}/RegisteredEntities").Result.Content.ReadAsStringAsync();
+            var regEntitiesSummaryResponse = await client.GetAsync($"{Globals.Globals.service_end_point}/{user.UserName}/RegisteredEntities").Result.Content.ReadAsStringAsync();
             dynamic regEntitiesSummaryJson;
             List<RegisteredEntitySummary> entitiesSummary = new List<RegisteredEntitySummary>();
             try
@@ -226,7 +226,7 @@ namespace BillerClientConsole.Controllers
         {
             //Count for number of unassigned tasks
             var client = new HttpClient();
-            var res = client.GetAsync($"{Globals.end_point_get_name_searches}").Result.Content.ReadAsStringAsync().Result;
+            var res = client.GetAsync($"{Globals.Globals.end_point_get_name_searches}").Result.Content.ReadAsStringAsync().Result;
             dynamic data_j = JsonConvert.DeserializeObject(res);
             var searchNames = data_j.data.value;
             List<mSearch> names = JsonConvert.DeserializeObject<List<mSearch>>(searchNames.ToString());
@@ -246,7 +246,7 @@ namespace BillerClientConsole.Controllers
 
             //Number of companies
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-            var resp = client.GetAsync($"{Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
+            var resp = client.GetAsync($"{Globals.Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
             dynamic dataa_j = JsonConvert.DeserializeObject(resp);
             var companies = dataa_j.data.value;
             List<mCompanyResponse> companyApplications = JsonConvert.DeserializeObject<List<mCompanyResponse>>(companies.ToString());
@@ -272,7 +272,7 @@ namespace BillerClientConsole.Controllers
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             ViewBag.title = "Examiner tasks";
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_get_assigned_tasks}?UserID={user.Email}").Result.Content.ReadAsStringAsync(); //TODO change with examiner user id
+            var res = await client.GetAsync($"{Globals.Globals.end_point_get_assigned_tasks}?UserID={user.Email}").Result.Content.ReadAsStringAsync(); //TODO change with examiner user id
             db.Dispose();
             AssinedTasksResponse resp = JsonConvert.DeserializeObject<AssinedTasksResponse>(res);
             db.Dispose();
@@ -300,7 +300,7 @@ namespace BillerClientConsole.Controllers
             }
             else if (display.Equals("CompanyApplications"))
             {
-                var response = client.GetAsync($"{Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
+                var response = client.GetAsync($"{Globals.Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
                 dynamic dataa_j = JsonConvert.DeserializeObject(response);
                 var companies = dataa_j.data.value;
                 List<mCompanyResponse> companyApplications = JsonConvert.DeserializeObject<List<mCompanyResponse>>(companies.ToString());

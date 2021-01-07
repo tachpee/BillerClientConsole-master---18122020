@@ -7,7 +7,7 @@ using BillerClientConsole.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
@@ -76,7 +76,7 @@ namespace BillerClientConsole.Controllers
             var client = new HttpClient();
 
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-            var response = await client.GetAsync($"{Globals.end_point_GetBillerInfoByBillerCode}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync(); ;
+            var response = await client.GetAsync($"{Globals.Globals.end_point_GetBillerInfoByBillerCode}?billercode={user.BillerCode}").Result.Content.ReadAsStringAsync(); ;
             dynamic json_data = JsonConvert.DeserializeObject(response.ToString());
 
             if (json_data.res == "ok")
@@ -116,7 +116,7 @@ namespace BillerClientConsole.Controllers
                 data = data.Replace("=", ":");
 
                 var client = new HttpClient();
-                var response = await client.PostAsync($"{Globals.end_point_UpdateBillerInfoByBillerCode}?data={data}", null).Result.Content.ReadAsStringAsync();
+                var response = await client.PostAsync($"{Globals.Globals.end_point_UpdateBillerInfoByBillerCode}?data={data}", null).Result.Content.ReadAsStringAsync();
                 dynamic json_data = JsonConvert.SerializeObject(response);
                 if (json_data.res == "ok")
                 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using BillerClientConsole.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -22,8 +22,8 @@ namespace BillerClientConsole.Controllers
         {
             var client = new HttpClient();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-            var paymentsHistory = await client.GetAsync($"{Globals.end_point_payment}{user.UserName}").Result.Content.ReadAsStringAsync();
-            var creditsHistory = await client.GetAsync($"{Globals.end_point_payments_credits}{user.UserName}").Result.Content.ReadAsStringAsync();
+            var paymentsHistory = await client.GetAsync($"{Globals.Globals.end_point_payment}{user.UserName}").Result.Content.ReadAsStringAsync();
+            var creditsHistory = await client.GetAsync($"{Globals.Globals.end_point_payments_credits}{user.UserName}").Result.Content.ReadAsStringAsync();
 
             dynamic json_data = JsonConvert.DeserializeObject(paymentsHistory);
             PaymentsResponse response  = JsonConvert.DeserializeObject<PaymentsResponse>(json_data.ToString());
@@ -57,8 +57,8 @@ namespace BillerClientConsole.Controllers
                 var response = paynow.Send(payment);
                 if (response.Success())
                 {
-                    Globals.payment = paynow;
-                    Globals.response = response;
+                    Globals.Globals.payment = paynow;
+                    Globals.Globals.response = response;
                     return new RedirectResult(response.RedirectLink());
                 }
             }
@@ -69,8 +69,8 @@ namespace BillerClientConsole.Controllers
         [HttpGet("Response/{redirect}")]
         public async Task<IActionResult> PaynowRwsponse(string redirect)
         {
-            var payment = Globals.payment;
-            var response = Globals.response;
+            var payment = Globals.Globals.payment;
+            var response = Globals.Globals.response;
 
             var status = payment.PollTransaction(response.PollUrl());
             if (status.Paid())

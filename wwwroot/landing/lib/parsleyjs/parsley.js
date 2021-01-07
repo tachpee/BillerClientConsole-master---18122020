@@ -2462,10 +2462,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
       // Bind the testing handlers
       install: function install() {
-        if (globals.inputEventPatched) {
+        if (Globals.Globals.inputEventPatched) {
           return;
         }
-        globals.inputEventPatched = '0.0.3';
+        Globals.Globals.inputEventPatched = '0.0.3';
         var _arr = ['select', 'input[type="checkbox"]', 'input[type="radio"]', 'input[type="file"]'];
         for (var _i = 0; _i < _arr.length; _i++) {
           var selector = _arr[_i];
@@ -2474,7 +2474,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       },
 
       uninstall: function uninstall() {
-        delete globals.inputEventPatched;
+        delete Globals.Globals.inputEventPatched;
         $(document).off('.inputevent');
       }
 

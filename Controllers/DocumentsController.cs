@@ -7,7 +7,7 @@ using IronPdf;
 using IronBarCode;
 using System.Drawing;
 using System.Net.Http;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using Newtonsoft.Json;
 using BillerClientConsole.Models;
 using System.Globalization;
@@ -22,7 +22,7 @@ namespace BillerClientConsole.Controllers
         {
 
             var clientw = new HttpClient();
-            var res = clientw.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={searchref}").Result.Content.ReadAsStringAsync().Result;
+            var res = clientw.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={searchref}").Result.Content.ReadAsStringAsync().Result;
             var i = 0;
 
             dynamic json_data = JsonConvert.DeserializeObject(res);
@@ -215,7 +215,7 @@ namespace BillerClientConsole.Controllers
             string[] HtmlArray;
 
             var clientw = new HttpClient();
-            var res = clientw.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={searchref}").Result.Content.ReadAsStringAsync().Result;
+            var res = clientw.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={searchref}").Result.Content.ReadAsStringAsync().Result;
             var i = 0;
 
             dynamic json_data = JsonConvert.DeserializeObject(res);
@@ -251,7 +251,7 @@ namespace BillerClientConsole.Controllers
 
             //registered office details
             string applicationId = companyInfo.Application_Ref;
-            var result = clientw.GetAsync($"{Globals.service_end_point}/{applicationId}/Details").Result.Content.ReadAsStringAsync().Result;
+            var result = clientw.GetAsync($"{Globals.Globals.service_end_point}/{applicationId}/Details").Result.Content.ReadAsStringAsync().Result;
             dynamic json_datab = JsonConvert.DeserializeObject(result);
 
             var officedetail = json_datab.office;

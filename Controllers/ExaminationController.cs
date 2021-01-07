@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BillerClientConsole.Dtos;
 using System.Net.Http;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using BillerClientConsole.Models;
 using Newtonsoft.Json;
 using BillerClientConsole.Data;
@@ -25,7 +25,7 @@ namespace BillerClientConsole.Controllers
         public async Task<IActionResult> ExamineAddressAsync(Query query)
         {
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync<Query>($"{Globals.end_point_post_address_has_query}", query);
+            var response = await client.PostAsJsonAsync<Query>($"{Globals.Globals.end_point_post_address_has_query}", query);
             if (response.IsSuccessStatusCode)
             {
                 return Ok();
@@ -42,7 +42,7 @@ namespace BillerClientConsole.Controllers
 
             var client = new HttpClient();
 
-            var rhisponzi = await client.GetAsync($"{Globals.service_end_point}/{applicationId}/Details").Result.Content.ReadAsStringAsync();
+            var rhisponzi = await client.GetAsync($"{Globals.Globals.service_end_point}/{applicationId}/Details").Result.Content.ReadAsStringAsync();
             dynamic json_dataa = JsonConvert.DeserializeObject(rhisponzi);
             
 

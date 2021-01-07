@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using BillerClientConsole.Models;
 using Newtonsoft.Json;
 using X.PagedList;
@@ -33,7 +33,7 @@ namespace BillerClientConsole.Controllers.Partials
             //now using datatables , paging and pagenumber now obsolete
             //if (pageNumber < 1) pageNumber = 1;//ensure page never goes below one
             //var client = new HttpClient();
-            //var result = await client.GetAsync($"{Globals.end_point_GetAllBillerProducts}?BillerCode={billercode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
+            //var result = await client.GetAsync($"{Globals.Globals.end_point_GetAllBillerProducts}?BillerCode={billercode}&date_from={date_from}&date_to={date_to}").Result.Content.ReadAsStringAsync();
             //dynamic json_data = JsonConvert.DeserializeObject(result);
             //if (json_data.res == "err") return PartialView("_ListBillerProducts", null); ;
             ////var data = json_data.data;

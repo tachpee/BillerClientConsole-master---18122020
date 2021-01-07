@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BillerClientConsole.Models;
 using Microsoft.AspNetCore.Mvc;
-using BillerClientConsole._Globals;
+using BillerClientConsole.Globals;
 using Newtonsoft.Json;
 using Webdev.Payments;
 using Syncfusion.EJ2.Base;
@@ -68,7 +68,7 @@ namespace BillerClientConsole.Controllers
                 if (ToDisplay.Equals("CompanyApplications"))
                 {
                     var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-                    var resp = client.GetAsync($"{Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
+                    var resp = client.GetAsync($"{Globals.Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
                     dynamic dataa_j = JsonConvert.DeserializeObject(resp);
                     var companies = dataa_j.data.value;
                     List<mCompanyResponse> companyApplications = JsonConvert.DeserializeObject<List<mCompanyResponse>>(companies.ToString());
@@ -83,7 +83,7 @@ namespace BillerClientConsole.Controllers
             else
             {
                 var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-                var resp = client.GetAsync($"{Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
+                var resp = client.GetAsync($"{Globals.Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
                 dynamic dataa_j = JsonConvert.DeserializeObject(resp);
                 var companies = dataa_j.data.value;
                 List<mCompanyResponse> companyApplications = JsonConvert.DeserializeObject<List<mCompanyResponse>>(companies.ToString());
@@ -91,7 +91,7 @@ namespace BillerClientConsole.Controllers
                 ViewBag.CompanyApplications = unassignedApplications.Count;
                 
 
-                var res = client.GetAsync($"{Globals.end_point_get_name_searches}").Result.Content.ReadAsStringAsync().Result;
+                var res = client.GetAsync($"{Globals.Globals.end_point_get_name_searches}").Result.Content.ReadAsStringAsync().Result;
                 dynamic data_j = JsonConvert.DeserializeObject(res);
                 var searchNames = data_j.data.value;
                 List<mSearch> names = JsonConvert.DeserializeObject<List<mSearch>>(searchNames.ToString());
@@ -121,7 +121,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.title = "About";
             var client = new HttpClient();
             
-            var resp = client.GetAsync($"{Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
+            var resp = client.GetAsync($"{Globals.Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
             dynamic dataa_j = JsonConvert.DeserializeObject(resp);
             var companies = dataa_j.data.value;
             
@@ -140,7 +140,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.title = "About";
             if (string.IsNullOrEmpty(onDisplay))
             {
-                var res = client.GetAsync($"{Globals.end_point_get_name_searches}").Result.Content.ReadAsStringAsync().Result;
+                var res = client.GetAsync($"{Globals.Globals.end_point_get_name_searches}").Result.Content.ReadAsStringAsync().Result;
                 dynamic data_j = JsonConvert.DeserializeObject(res);
                 var searchNames = data_j.data.value;
                 List<mSearch> names = JsonConvert.DeserializeObject<List<mSearch>>(searchNames.ToString());
@@ -150,7 +150,7 @@ namespace BillerClientConsole.Controllers
             }else if (onDisplay.Equals("CompanyApplication"))
             {
                 var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
-                var resp = client.GetAsync($"{Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
+                var resp = client.GetAsync($"{Globals.Globals.end_point_get_company_application}").Result.Content.ReadAsStringAsync().Result;
                 dynamic dataa_j = JsonConvert.DeserializeObject(resp);
                 var companies = dataa_j.data.value;
                 List<mCompanyResponse> companyApplications = JsonConvert.DeserializeObject<List<mCompanyResponse>>(companies.ToString());
@@ -170,7 +170,7 @@ namespace BillerClientConsole.Controllers
         public async Task<JsonResult> AssignCompanyForExamination(string Examiner,string SearchRef)
         {
             var client = new HttpClient();
-            var rhisponzi = await client.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={SearchRef}").Result.Content.ReadAsStringAsync();
+            var rhisponzi = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={SearchRef}").Result.Content.ReadAsStringAsync();
             dynamic json_dataa = JsonConvert.DeserializeObject(rhisponzi);
             dynamic dataa = json_dataa;
             try
@@ -185,7 +185,7 @@ namespace BillerClientConsole.Controllers
             mCompanyResponse companyApplication = JsonConvert.DeserializeObject<mCompanyResponse>(dataa.ToString());
             companyApplication.companyInfo.Examiner = Examiner;
 
-            var response = await client.PostAsJsonAsync<mCompanyResponse>($"{Globals.end_point_assign_company_for_examination}", companyApplication).Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsJsonAsync<mCompanyResponse>($"{Globals.Globals.end_point_assign_company_for_examination}", companyApplication).Result.Content.ReadAsStringAsync();
             dynamic json_da = JsonConvert.DeserializeObject(response);
             dynamic data = json_da;
             PostResponse pr = JsonConvert.DeserializeObject<PostResponse>(data.ToString());
@@ -214,7 +214,7 @@ namespace BillerClientConsole.Controllers
            
             ViewBag.title = "Name search detail";
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_get_name_search_by_user_by_task_id}?UserID={user.Email}&TaskID={taskId}").Result.Content.ReadAsStringAsync();
+            var res = await client.GetAsync($"{Globals.Globals.end_point_get_name_search_by_user_by_task_id}?UserID={user.Email}&TaskID={taskId}").Result.Content.ReadAsStringAsync();
 
             dynamic data_j = JsonConvert.DeserializeObject(res);
             dynamic json_data = JsonConvert.DeserializeObject(res);
@@ -270,7 +270,7 @@ namespace BillerClientConsole.Controllers
 
             task._id = Guid.NewGuid().ToString();
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync<mTasks>($"{Globals.end_point_post_task}", task).Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsJsonAsync<mTasks>($"{Globals.Globals.end_point_post_task}", task).Result.Content.ReadAsStringAsync();
             PostSearchResponse ps = JsonConvert.DeserializeObject<PostSearchResponse>(response);
             db.Dispose();
             ViewBag.id = ps.id;
@@ -291,14 +291,14 @@ namespace BillerClientConsole.Controllers
         {
             var db = new dbContext();
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_submit_name_search}?tempsearchID={tempsearchID}").Result.Content.ReadAsStringAsync();
+            var res = await client.GetAsync($"{Globals.Globals.end_point_submit_name_search}?tempsearchID={tempsearchID}").Result.Content.ReadAsStringAsync();
             PostSearchResponse psr = JsonConvert.DeserializeObject<PostSearchResponse>(res);
             db.Dispose();
 
             //if(psr.res == "ok")
             //{
-            //    Globals.searchApplicationID = "";
-            //    Globals.tempSearchId1 = "";
+            //    Globals.Globals.searchApplicationID = "";
+            //    Globals.Globals.tempSearchId1 = "";
             //    return RedirectToAction("Paynow", new { gateway = tempsearchID});
             //}
             return View();
@@ -310,7 +310,7 @@ namespace BillerClientConsole.Controllers
             var db = new dbContext();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_check_name_availability}?name={name}").Result.Content.ReadAsStringAsync();
+            var res = await client.GetAsync($"{Globals.Globals.end_point_check_name_availability}?name={name}").Result.Content.ReadAsStringAsync();
             PostResponse ps = JsonConvert.DeserializeObject<PostResponse>(res);
             db.Dispose();
 
@@ -345,7 +345,7 @@ namespace BillerClientConsole.Controllers
             var db = new dbContext();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_check_name_start_contains_in_name_search}?name={name}").Result.Content.ReadAsStringAsync();
+            var res = await client.GetAsync($"{Globals.Globals.end_point_check_name_start_contains_in_name_search}?name={name}").Result.Content.ReadAsStringAsync();
             GetNamesResponse ps = JsonConvert.DeserializeObject<GetNamesResponse>(res);
             db.Dispose();
 
@@ -363,7 +363,7 @@ namespace BillerClientConsole.Controllers
             var db = new dbContext();
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
             var client = new HttpClient();
-            var res = await client.GetAsync($"{Globals.end_point_check_name_start_with_name_search}?name={name}").Result.Content.ReadAsStringAsync();
+            var res = await client.GetAsync($"{Globals.Globals.end_point_check_name_start_with_name_search}?name={name}").Result.Content.ReadAsStringAsync();
             GetNamesResponse ps = JsonConvert.DeserializeObject<GetNamesResponse>(res);
             db.Dispose();
 
@@ -389,9 +389,9 @@ namespace BillerClientConsole.Controllers
 
             if (name.Status == "Reserved")
             {
-                var rese = clientp.GetAsync($"{Globals.end_point_get_update_task}?TasksID={TaskID}").Result.Content.ReadAsStringAsync().Result;
+                var rese = clientp.GetAsync($"{Globals.Globals.end_point_get_update_task}?TasksID={TaskID}").Result.Content.ReadAsStringAsync().Result;
 
-                var res = clientw.GetAsync($"{Globals.end_point_get_name_searches_by_search_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
+                var res = clientw.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_search_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
                 dynamic data_j = JsonConvert.DeserializeObject(res);
                 var searchNames = data_j.data.value.searchNames;
                 List<mSearchNames> names = JsonConvert.DeserializeObject<List<mSearchNames>>(searchNames.ToString());
@@ -402,14 +402,14 @@ namespace BillerClientConsole.Controllers
                 {
                     zita.Status = "Not Considered";
                     var clientr = new HttpClient();
-                    var resr = await clientr.PostAsJsonAsync<mSearchNames>($"{Globals.end_point_approved_search_name}", zita).Result.Content.ReadAsStringAsync();
+                    var resr = await clientr.PostAsJsonAsync<mSearchNames>($"{Globals.Globals.end_point_approved_search_name}", zita).Result.Content.ReadAsStringAsync();
                 }
-                var resp = await client.PostAsJsonAsync<mSearchNames>($"{Globals.end_point_approved_search_name}", name).Result.Content.ReadAsStringAsync();
+                var resp = await client.PostAsJsonAsync<mSearchNames>($"{Globals.Globals.end_point_approved_search_name}", name).Result.Content.ReadAsStringAsync();
                 ps = JsonConvert.DeserializeObject<PostResponse>(resp);
 
                 if(ps.res == "ok")
                 {
-                    var response = clientw.GetAsync($"{Globals.end_point_get_name_search_by_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
+                    var response = clientw.GetAsync($"{Globals.Globals.end_point_get_name_search_by_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
                     dynamic json_data = JsonConvert.DeserializeObject(response);
                     var data = json_data.data.value.searchInfo;
                     mSearchInfo search = JsonConvert.DeserializeObject<mSearchInfo>(data.ToString());
@@ -417,26 +417,26 @@ namespace BillerClientConsole.Controllers
                     {
                         search.ApprovedDate = DateTime.Now.ToString();
                         search.Satus = "Approved";
-                        var resr = await clientw.PostAsJsonAsync<mSearchInfo>($"{Globals.end_point_approve_search}", search).Result.Content.ReadAsStringAsync();
+                        var resr = await clientw.PostAsJsonAsync<mSearchInfo>($"{Globals.Globals.end_point_approve_search}", search).Result.Content.ReadAsStringAsync();
                     }
                 }
             }
 
             else
             {
-                var res = await client.PostAsJsonAsync<mSearchNames>($"{Globals.end_point_approved_search_name}", name).Result.Content.ReadAsStringAsync();
+                var res = await client.PostAsJsonAsync<mSearchNames>($"{Globals.Globals.end_point_approved_search_name}", name).Result.Content.ReadAsStringAsync();
                 ps = JsonConvert.DeserializeObject<PostResponse>(res);
                 if(ps.res == "ok")
                 {
-                    var ress = clientw.GetAsync($"{Globals.end_point_get_name_searches_by_search_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
+                    var ress = clientw.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_search_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
                     dynamic data_j = JsonConvert.DeserializeObject(ress);
                     var searchNames = data_j.data.value.searchNames;
                     List<mSearchNames> names = JsonConvert.DeserializeObject<List<mSearchNames>>(searchNames.ToString());
                     names = names.Where(z =>  z.Status == "Pending" ).ToList();
                     if (names.Count < 1)
                     {
-                        var rese = clientp.GetAsync($"{Globals.end_point_get_update_task}?TaskID={TaskID}").Result.Content.ReadAsStringAsync().Result;
-                        var response = clientw.GetAsync($"{Globals.end_point_get_name_search_by_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
+                        var rese = clientp.GetAsync($"{Globals.Globals.end_point_get_update_task}?TaskID={TaskID}").Result.Content.ReadAsStringAsync().Result;
+                        var response = clientw.GetAsync($"{Globals.Globals.end_point_get_name_search_by_id}?ID={name.Search_ID}").Result.Content.ReadAsStringAsync().Result;
                         dynamic json_data = JsonConvert.DeserializeObject(response);
                         var data = json_data.data.value[0].searchInfo;
                         mSearchInfo search = JsonConvert.DeserializeObject<mSearchInfo>(data.ToString());
@@ -445,7 +445,7 @@ namespace BillerClientConsole.Controllers
                             search.ApprovedDate = DateTime.Now.ToString();
                             search.Satus = "Rejected";
 
-                            var resr = await clientw.PostAsJsonAsync<mSearchInfo>($"{Globals.end_point_approve_search}", search).Result.Content.ReadAsStringAsync();
+                            var resr = await clientw.PostAsJsonAsync<mSearchInfo>($"{Globals.Globals.end_point_approve_search}", search).Result.Content.ReadAsStringAsync();
                         }
                     }
                 }
@@ -478,7 +478,7 @@ namespace BillerClientConsole.Controllers
 
             var client = new HttpClient();
 
-            var rhisponzi = await client.GetAsync($"{Globals.end_point_get_company_application_by_search_ref}?SearchRef={reference}").Result.Content.ReadAsStringAsync();
+            var rhisponzi = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={reference}").Result.Content.ReadAsStringAsync();
            
             dynamic json_dataa = JsonConvert.DeserializeObject(rhisponzi);
             dynamic dataa = json_dataa;
@@ -495,7 +495,7 @@ namespace BillerClientConsole.Controllers
             List<Subscriber> subscribers = new List<Subscriber>();
             ViewBag.Application = companyApplication.companyInfo.Application_Ref;
 
-            var nameOfficeResponse = await client.GetAsync($"{Globals.service_end_point}/{companyApplication.companyInfo.Search_Ref}/Namesearch/{companyApplication.companyInfo.Office}/Office").Result.Content.ReadAsStringAsync();
+            var nameOfficeResponse = await client.GetAsync($"{Globals.Globals.service_end_point}/{companyApplication.companyInfo.Search_Ref}/Namesearch/{companyApplication.companyInfo.Office}/Office").Result.Content.ReadAsStringAsync();
             dynamic nameOfficeJson = JsonConvert.DeserializeObject(nameOfficeResponse);
             NameOfficeResponse nameOffice = JsonConvert.DeserializeObject<NameOfficeResponse>(nameOfficeJson.ToString());
             ViewBag.NameOffice = nameOffice;
@@ -820,16 +820,16 @@ namespace BillerClientConsole.Controllers
             ms1.Reason_For_Search = product.Reason.ToUpper();
 
            
-                Globals.tempSearchId1 = Guid.NewGuid().ToString();
-                Globals.tempSearchNameId1 = Guid.NewGuid().ToString();
-                Globals.tempSearchNameId2 = Guid.NewGuid().ToString();
-                Globals.tempSearchNameId3 = Guid.NewGuid().ToString();
-                Globals.tempSearchNameId4 = Guid.NewGuid().ToString();
-                Globals.tempSearchNameId5 = Guid.NewGuid().ToString();
-                Globals.tempSearchNameId6 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchId1 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchNameId1 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchNameId2 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchNameId3 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchNameId4 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchNameId5 = Guid.NewGuid().ToString();
+                Globals.Globals.tempSearchNameId6 = Guid.NewGuid().ToString();
            
 
-            ms1.search_ID = Globals.tempSearchId1;
+            ms1.search_ID = Globals.Globals.tempSearchId1;
            
            
             List<mSearchNames> snames = new List<mSearchNames>();
@@ -837,7 +837,7 @@ namespace BillerClientConsole.Controllers
                 snames.Add(new mSearchNames
                 {
                     Name = product.name1.ToUpper(),
-                    Name_ID = Globals.tempSearchNameId1,
+                    Name_ID = Globals.Globals.tempSearchNameId1,
                     Status = "Pending",
                     Search_ID = ms1.search_ID
                 });
@@ -845,7 +845,7 @@ namespace BillerClientConsole.Controllers
                 snames.Add(new mSearchNames
                 {
                     Name = product.name2.ToUpper(),
-                    Name_ID = Globals.tempSearchNameId2,
+                    Name_ID = Globals.Globals.tempSearchNameId2,
                     Status = "Pending",
                     Search_ID = ms1.search_ID
                 });
@@ -853,7 +853,7 @@ namespace BillerClientConsole.Controllers
                 snames.Add(new mSearchNames
                 {
                     Name = product.name3.ToUpper(),
-                    Name_ID = Globals.tempSearchNameId3,
+                    Name_ID = Globals.Globals.tempSearchNameId3,
                     Status = "Pending",
                     Search_ID = ms1.search_ID
                 });
@@ -861,7 +861,7 @@ namespace BillerClientConsole.Controllers
                 snames.Add(new mSearchNames
                 {
                     Name = product.name4.ToUpper(),
-                    Name_ID = Globals.tempSearchNameId4,
+                    Name_ID = Globals.Globals.tempSearchNameId4,
                     Status = "Pending",
                     Search_ID = ms1.search_ID
                 });
@@ -869,25 +869,25 @@ namespace BillerClientConsole.Controllers
                 snames.Add(new mSearchNames
                 {
                     Name = product.name5.ToUpper(),
-                    Name_ID = Globals.tempSearchNameId5,
+                    Name_ID = Globals.Globals.tempSearchNameId5,
                     Status = "Pending",
                     Search_ID = ms1.search_ID
                 });
             //if (!string.IsNullOrEmpty(product.name6))
-            //snames.Add(new mSearchNames { Name = product.name6.ToUpper(), Name_ID =Globals.tempSearchNameId6,Search_ID = ms1.search_ID });
+            //snames.Add(new mSearchNames { Name = product.name6.ToUpper(), Name_ID =Globals.Globals.tempSearchNameId6,Search_ID = ms1.search_ID });
 
             ms.searchInfo = ms1;
             ms.SearchNames = snames;
 
             ViewBag.title = "New Search";
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync<mSearch>($"{Globals.end_point_add_search}", ms).Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsJsonAsync<mSearch>($"{Globals.Globals.end_point_add_search}", ms).Result.Content.ReadAsStringAsync();
             PostSearchResponse ps =  JsonConvert.DeserializeObject<PostSearchResponse>(response);
             if (ps.res == "ok")
             {
 
             }
-            Globals.searchApplicationID = Globals.tempSearchId1;
+            Globals.Globals.searchApplicationID = Globals.Globals.tempSearchId1;
             return RedirectToAction("ListBillerProducts");
         }
 
@@ -902,7 +902,7 @@ namespace BillerClientConsole.Controllers
         {
             ViewBag.title = "View Product Details";
             var client = new HttpClient();
-            var response = client.GetAsync($"{Globals.end_point_fetchBillerProductById}?id={id}").Result.Content.ReadAsStringAsync().Result;
+            var response = client.GetAsync($"{Globals.Globals.end_point_fetchBillerProductById}?id={id}").Result.Content.ReadAsStringAsync().Result;
             ViewBag.product = JsonConvert.DeserializeObject(response);
             return View();
         }
@@ -915,7 +915,7 @@ namespace BillerClientConsole.Controllers
             //var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).First();
             ////ajax reports is in partial controllers
             TempData["loadUrl"] = $"/ajax/products/BillerProducts";
-            TempData["id"] = Globals.searchApplicationID;
+            TempData["id"] = Globals.Globals.searchApplicationID;
             //TempData["billercode"] = "Telone";
             //TempData["date_to"] = "20/4/2020";
             //TempData["date_from"] = "20/4/2020";
@@ -931,7 +931,7 @@ namespace BillerClientConsole.Controllers
         public async Task<IActionResult> UpdateProduct(mProductOffline product)
         {
             var client = new HttpClient();
-            var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.end_point_updateBillerProduct}", product);
+            var response = await client.PostAsJsonAsync<mProductOffline>($"{Globals.Globals.end_point_updateBillerProduct}", product);
             return RedirectToAction("ListBillerProducts");
         }
 
@@ -940,7 +940,7 @@ namespace BillerClientConsole.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var client = new HttpClient();
-            var resp = await client.GetAsync($"{Globals.end_point_DeleteProductBillerProductById}?id={id}");
+            var resp = await client.GetAsync($"{Globals.Globals.end_point_DeleteProductBillerProductById}?id={id}");
             return RedirectToAction("ListBillerProducts");
         }
 
@@ -983,8 +983,8 @@ namespace BillerClientConsole.Controllers
                     var status = paynow.PollTransaction(pollUrl);
 
                     ViewBag.Paid = "false";
-                    Globals.payment = paynow;
-                    Globals.response = response;
+                    Globals.Globals.payment = paynow;
+                    Globals.Globals.response = response;
 
                     //if (status.Paid())
                     //{
@@ -999,14 +999,14 @@ namespace BillerClientConsole.Controllers
             }
             else
             {
-                var payment = Globals.payment;
-                var response = Globals.response;                
+                var payment = Globals.Globals.payment;
+                var response = Globals.Globals.response;                
 
                 var status = payment.PollTransaction(response.PollUrl());
                 if (status.Paid())
                 {
                     var client = new HttpClient();
-                    var responsey = await client.PostAsJsonAsync<string>($"{Globals.end_point_pay_for_search}", gateway).Result.Content.ReadAsStringAsync();
+                    var responsey = await client.PostAsJsonAsync<string>($"{Globals.Globals.end_point_pay_for_search}", gateway).Result.Content.ReadAsStringAsync();
                     PostSearchResponse psr = JsonConvert.DeserializeObject<PostSearchResponse>(responsey);
 
                     ViewBag.Paid = "true";
@@ -1036,7 +1036,7 @@ namespace BillerClientConsole.Controllers
             //Using Iron PDF
             //  IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
             var clientw = new HttpClient();
-            var res = clientw.GetAsync($"{Globals.end_point_get_name_searches_by_search_id}?ID={nameRef}").Result.Content.ReadAsStringAsync().Result;
+            var res = clientw.GetAsync($"{Globals.Globals.end_point_get_name_searches_by_search_id}?ID={nameRef}").Result.Content.ReadAsStringAsync().Result;
             var i = 0;
 
             dynamic json_data = JsonConvert.DeserializeObject(res);
