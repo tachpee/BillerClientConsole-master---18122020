@@ -35,6 +35,7 @@ namespace BillerClientConsole.Controllers
                     queryExists.QueryCount += 1;
                     queryExists.comment = query.comment;
                     queryExists.status = "Pending";
+
                     
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
@@ -114,6 +115,8 @@ namespace BillerClientConsole.Controllers
                     //If it exists and has another query Update the current 
                     Queries queryExists = QueryExits.FirstOrDefault();
                     queryExists.QueryCount += 1;
+                    queryExists.comment = query.comment; ;
+                    queryExists.status = "Pending";
 
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
@@ -193,6 +196,8 @@ namespace BillerClientConsole.Controllers
                     //If it exists and has another query Update the current 
                     Queries queryExists = QueryExits.FirstOrDefault();
                     queryExists.QueryCount += 1;
+                    queryExists.comment = query.comment; ;
+                    queryExists.status = "Pending";
 
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
@@ -259,6 +264,16 @@ namespace BillerClientConsole.Controllers
                     return BadRequest();
                 }
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> ResolveQuery(string id, string step,string applicationRef)
+        {
+            var db = new db();
+            if (step == "Step2")
+            {
+                var registeredOfficeExists = 
+            }
+
         }
     }
 }

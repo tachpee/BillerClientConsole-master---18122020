@@ -207,8 +207,14 @@ namespace BillerClientConsole.Controllers
             List<Queries> query = new List<Queries>();
             foreach (var item in companyApplications)
             {
-                query = context.Queries.Where(q => q.applicationRef == item.companyInfo.Application_Ref && q.status == "Pending").ToList();
-                
+                var query1 = context.Queries
+                    .Where(q => q.applicationRef == item.companyInfo.Application_Ref && q.status == "Pending")
+                    .ToList();
+                foreach (var query1item in query1)
+                {
+                    query.Add(query1item);
+                }
+                        
             }
             ViewBag.Queries = query;
            
