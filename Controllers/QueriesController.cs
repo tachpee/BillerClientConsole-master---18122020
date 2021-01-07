@@ -9,6 +9,7 @@ using BillerClientConsole.Models;
 using BillerClientConsole.Models.QueryModel;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Webdev.Http;
 
 namespace BillerClientConsole.Controllers
 {
@@ -36,7 +37,7 @@ namespace BillerClientConsole.Controllers
                     queryExists.comment = query.comment;
                     queryExists.status = "Pending";
 
-                    
+
                     context.Queries.Update(queryExists);
                     await context.SaveChangesAsync();
 
@@ -46,7 +47,7 @@ namespace BillerClientConsole.Controllers
                         comment = query.comment,
                         dateCreated = DateTime.Now.ToString(),
                         status = "Pending",
-                        tableName="Step2",
+                        tableName = "Step2",
                     };
                     context.QueryHistory.Add(forqueryhistory);
                     await context.SaveChangesAsync();
@@ -67,7 +68,7 @@ namespace BillerClientConsole.Controllers
                         dateCreated = DateTime.Now.ToString(),
                         status = "Resolved",
                         tableName = "Step2",
-                        
+
                     };
                     context.QueryHistory.Add(forqueryhistory);
                     await context.SaveChangesAsync();
@@ -101,13 +102,13 @@ namespace BillerClientConsole.Controllers
                 {
                     return BadRequest();
                 }
-            }  
+            }
         }
         //ShareClause Query Handling
         [HttpPost("LiabilityAndShareClauseHasQuery")]
         public async Task<IActionResult> ShareClauseHasQuery(Queries query)
         {
-            var QueryExits = context.Queries.Where(q => q.applicationRef == query.applicationRef && q.tableName=="Step4");
+            var QueryExits = context.Queries.Where(q => q.applicationRef == query.applicationRef && q.tableName == "Step4");
             if (QueryExits.Count() > 0)
             {
                 if (query.HasQuery == true)
@@ -266,14 +267,31 @@ namespace BillerClientConsole.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> ResolveQuery(string id, string step,string applicationRef)
+        public async Task<IActionResult> ResolveQuery(string id, string step, string applicationRef)
         {
-            var db = new db();
+            var client =new HttpClient();
             if (step == "Step2")
             {
-                var registeredOfficeExists = 
+                var registeredOfficeExists = await client.GetAsync($"{Globals.service_end_point}/RegisteredOffice/{id}").Result.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<RegisteredOffice>(registeredOfficeExists);
+                return View(model);
             }
+            return NotFound();
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> ResolveQuery(RegisteredOffice model)
+        {
+            var client = new HttpClient();
+            if (ModelState.IsValid)
+            {
+               var result= await client.PostAsJsonAsync($"{Globals.service_end_point}/UpdateRegisteredOffice", model);
+                if (result.IsSuccessStatusCode)
+                {
+                    return Ok();
+                }   
+            }
+            return Ok();
         }
     }
 }

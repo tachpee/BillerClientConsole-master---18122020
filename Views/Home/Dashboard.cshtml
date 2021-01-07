@@ -314,7 +314,7 @@
         <td>@item.comment</td>
         <td>@item.tableName</td>
         <td>
-            <a onclick="showInPopup('@Url.Action("ResolveQuery","Queries",new {id = item.officeid, step=item.tableName, applicationRef=item.applicationRef },Context.Request.Scheme)', 'Update Information')" class="btn btn-info text-white"><i class="fas fa-pencil-alt">Resolve Query</i> </a>
+            <a onclick="showInPopup('@Url.Action("ResolveQuery","Queries",new {id = item.officeid, step=item.tableName, applicationRef=item.applicationRef },Context.Request.Scheme)', 'Update Information')" class="btn btn-info text-white">Resolve Query</a>
         
         </td>
 
@@ -336,22 +336,7 @@
         </div>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog" id="queryform-modal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-               
-            </div>
-           
-        </div>
-    </div>
-</div>
+
 
 
 <div class="modal fade" id="name-search-modal" tabindex="-9" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true" style="color:#0C2A46">
