@@ -24,8 +24,8 @@ ResolveQueryPost = form => {
                 //check if model is valid.... validate form input fields
                 if (res.isValid) {
                   //  $("#view-all").html(res.html);
-                    $("#queryform-modal .modal-body").html('');
-                    $("#queryform-modal .modal-title").html('');
+                   // $("#queryform-modal .modal-body").html('');
+                   // $("#queryform-modal .modal-title").html('');
                     $("#queryform-modal").modal('hide');
                     
                    // $.notify('Submitted Successfully', { globalPosition: 'top center', className: 'success' })

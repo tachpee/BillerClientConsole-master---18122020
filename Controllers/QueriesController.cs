@@ -272,16 +272,12 @@ namespace BillerClientConsole.Controllers
             var client =new HttpClient();
             if (step == "Step2")
             {
-                var registeredOfficeExists = await client.GetAsync($"{Globals.service_end_point}/RegisteredOffice/{id}").Result.Content.ReadAsStringAsync();
-                var model = JsonConvert.DeserializeObject<RegisteredOffice>(registeredOfficeExists);
-                return View(model);
-            }
-            return NotFound();
-        }
                 var registeredOfficeExists = await client.GetAsync($"{Globals.Globals.service_end_point}/RegisteredOffice/{id}").Result.Content.ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<RegisteredOffice>(registeredOfficeExists);
                 return View(model);
             }
+            
+       
             return NotFound();
         }
 
@@ -291,7 +287,7 @@ namespace BillerClientConsole.Controllers
             var client = new HttpClient();
             if (ModelState.IsValid)
             {
-               var result= await client.PostAsJsonAsync($"{Globals.service_end_point}/UpdateRegisteredOffice", model);
+               var result= await client.PostAsJsonAsync($"{Globals.Globals.service_end_point}/UpdateRegisteredOffice", model);
                 if (result.IsSuccessStatusCode)
                 {
                     return Ok();
