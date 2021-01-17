@@ -10,6 +10,7 @@ namespace BillerClientConsole.Models.QueryModel
     {
         [Key]
         public Guid QueryID { get; set; }
+        public string applicationID { get; set; }
         public string applicationRef { get; set; }
         public string comment { get; set; }
         public string description { get; set; }

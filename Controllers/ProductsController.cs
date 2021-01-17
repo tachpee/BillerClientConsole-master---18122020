@@ -494,7 +494,7 @@ namespace BillerClientConsole.Controllers
             ViewBag.companyApplication = companyApplication;
             List<Subscriber> subscribers = new List<Subscriber>();
             ViewBag.Application = companyApplication.companyInfo.Application_Ref;
-
+            ViewBag.ApplicationID=companyApplication.companyInfo.Search_Ref;//Search Ref or ApplicationID
             var nameOfficeResponse = await client.GetAsync($"{Globals.Globals.service_end_point}/{companyApplication.companyInfo.Search_Ref}/Namesearch/{companyApplication.companyInfo.Office}/Office").Result.Content.ReadAsStringAsync();
             dynamic nameOfficeJson = JsonConvert.DeserializeObject(nameOfficeResponse);
             NameOfficeResponse nameOffice = JsonConvert.DeserializeObject<NameOfficeResponse>(nameOfficeJson.ToString());

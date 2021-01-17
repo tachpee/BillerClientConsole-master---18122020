@@ -1,0 +1,103 @@
+﻿@{Layout = "../Shared/_LayoutMain";
+}
+
+<div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+    @*<input type="hidden" name="billercode" value="@ViewBag.billercode" />*@
+
+    <div class="card">
+        <div class="card-header">
+            <label class="mt-3">Members</label>
+            <span style="flex: 1 1 auto"></span>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                @if (ViewBag.CompanyApplication.members.Count > 0)
+                {
+
+                    <label>People</label>
+                    <table class="table  table-mb table-hover" style="color:#0C2A46;">
+                        <thead mt-5 mb-5 style="color:#0C2A46;">
+                            <tr>
+                                <th style="color:#0C2A46">Name</th>
+                                <th style="color:#0C2A46">Surname</th>
+                                <th style="color:#0C2A46">National ID</th>
+                                <th style="color:#0C2A46">Nationality</th>
+                                <th style="color:#0C2A46">Physical Address</th>
+                                <th style="color:#0C2A46">Role(s)</th>
+                                <th style="color:#0C2A46">Ordinary shares</th>
+                                <th style="color:#0C2A46">Preference shares</th>
+                                <th style="color:#0C2A46">Total shares</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var member in ViewBag.CompanyApplication.members)
+                            {
+                                @if (member.MemberType == "Person")
+                                {
+                                    <tr>
+                                        <td style="color:#0C2A46">@member.Name</td>
+                                        <td style="color:#0C2A46">@member.Surname</td>
+                                        <td style="color:#0C2A46">@member.NationalId</td>
+                                        <td style="color:#0C2A46">@member.Nationality</td>
+                                        <td style="color:#0C2A46">@member.PhysicalAddress</td>
+                                        @{ var roles = "";
+                                            foreach (var role in member.Roles)
+                                            {
+                                                roles = roles + " " + role;
+                                            } }
+                                        <td style="color:#0C2A46">@roles</td>
+                                        <td style="color:#0C2A46">@member.OrdinaryShares</td>
+                                        <td style="color:#0C2A46">@member.PreferenceShares</td>
+                                        <td style="color:#0C2A46">@member.NumberOfShares</td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+
+                    <label class="mt-5">Entities</label>
+                    <table class="table  table-mb table-hover" style="color:#0C2A46;">
+                        <thead mt-5 mb-5 style="color:#0C2A46;">
+                            <tr>
+                                <th style="color:#0C2A46">Name</th>
+                                <th style="color:#0C2A46">Entity number</th>
+                                <th style="color:#0C2A46">Nationality</th>
+                                <th style="color:#0C2A46">Role(s)</th>
+                                <th style="color:#0C2A46">Ordinary shares</th>
+                                <th style="color:#0C2A46">Preference shares</th>
+                                <th style="color:#0C2A46">Totals shares</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var member in ViewBag.CompanyApplication.members)
+                            {
+                                @if (member.MemberType == "Entity")
+                                {
+                                    <tr>
+                                        <td style="color:#0C2A46">@member.Name</td>
+                                        <td style="color:#0C2A46">@member.NationalId</td>
+                                        <td style="color:#0C2A46">@member.Nationality</td>
+                                        @{ var roles = "";
+                                            foreach (var role in member.Roles)
+                                            {
+                                                roles = roles + " " + role;
+                                            } }
+                                        <td style="color:#0C2A46">@roles</td>
+                                        <td style="color:#0C2A46">@member.OrdinaryShares</td>
+                                        <td style="color:#0C2A46">@member.PreferenceShares</td>
+                                        <td style="color:#0C2A46">@member.NumberOfShares</td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+
+                }
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="members" id="members" />
+    <input type="hidden" name="companyMembers" id="companyMembers" />
+</div>

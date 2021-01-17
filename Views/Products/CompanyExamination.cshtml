@@ -88,6 +88,7 @@
 
                     <input type="hidden" id="txtapplicationRef" name="applicationRef" value="@ViewBag.Application" />
                     <input type="hidden" name="tableName" value="RegisteredOffice" />
+                    <input type="hidden" name="applicationID" value="@ViewBag.ApplicationID"/>
                     @*<input type ="hidden" name="tableName" value="RegisteredOffice" />*@
 
                     <div class="card">
@@ -273,6 +274,7 @@
                                         <label for="HasQuery">Raise Query</label>
                                         <input type="checkbox" asp-for="@HasQuery" name="HasQuery" id="thasQuery">
                                         <input type="hidden" id="tapplicationRef" name="applicationRef" value="@ViewBag.Application" />
+                                        <input type="hidden" id="tapplicationID" name="applicationID" value="@ViewBag.ApplicationID" />
 
                                     </div>
                                 </div>
@@ -377,6 +379,7 @@
                                         <label for="HasQuery">Raise Query</label>
                                         <input type="checkbox" asp-for="@HasQuery" name="HasQuery" id="thasQuery">
                                         <input type="hidden" id="tapplicationRef" name="applicationRef" value="@ViewBag.Application" />
+                                        <input type="hidden" id="tapplicationID" name="applicationID" value="@ViewBag.ApplicationID" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">

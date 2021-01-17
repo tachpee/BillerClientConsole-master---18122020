@@ -34,7 +34,11 @@ namespace BillerClientConsole.Controllers
         }
        
        
-
+/// <summary>
+/// /Controller to get application Details
+/// </summary>
+/// <param name="applicationId"></param>
+/// <returns></returns>
         [HttpGet("{applicationId}/detail")]
         public async Task<IActionResult> ApplicationFromExaminer(string applicationId)
         {
