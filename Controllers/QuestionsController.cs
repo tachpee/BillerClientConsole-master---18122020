@@ -138,6 +138,7 @@ namespace BillerClientConsole.Controllers
             objects = new List<mmainClause>();
             ViewBag.title = "New Company Application";
             var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
+            //ViewBag.billercode = user.BillerCode;
 
             var client = new HttpClient();
 

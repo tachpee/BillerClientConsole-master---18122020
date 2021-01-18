@@ -266,10 +266,33 @@ namespace BillerClientConsole.Controllers
                 }
             }
         }
+
         [HttpGet("ResolveMembersQuery")]
         public async Task<IActionResult> ResolveMembersQuery(string applicationID)
         {
+            var db = new dbContext();
+            var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
+            ViewBag.billercode = user.BillerCode;
+            //====================
+            var client = new HttpClient();
 
+            var rhisponzi = await client.GetAsync($"{Globals.Globals.service_end_point}/{applicationID}/Details").Result.Content.ReadAsStringAsync();
+            dynamic json_dataa = JsonConvert.DeserializeObject(rhisponzi);
+
+
+            CompanyApplicationForRewiew companyApplication = JsonConvert.DeserializeObject<CompanyApplicationForRewiew>(json_dataa.ToString());
+            ViewBag.CompanyApplication = companyApplication;
+            return View();
+            //---------------------
+        }
+
+        //ResolveShareClauseQuery
+        [HttpGet("ResolveShareClauseQuery")]
+        public async Task<IActionResult> ResolveShareClauseQuery(string applicationID)
+        {
+            var db = new dbContext();
+            var user = db.AspNetUsers.Where(i => i.Email == User.Identity.Name).FirstOrDefault();
+            ViewBag.billercode = user.BillerCode;
             //====================
             var client = new HttpClient();
 
@@ -304,7 +327,7 @@ namespace BillerClientConsole.Controllers
             }
             else if (step == "Step4")
             {
-                return RedirectToAction("");
+                return RedirectToAction("ResolveShareClauseQuery", new { applicationID=applicationRef});
             }
 
                    
