@@ -267,32 +267,26 @@ namespace BillerClientConsole.Controllers
             }
         }
         [HttpGet("ResolveMembersQuery")]
-        public ActionResult ResolveMembersQuery(string applicationID)
+        public async Task<IActionResult> ResolveMembersQuery(string applicationID)
         {
+
+            //====================
             var client = new HttpClient();
-            var rhisponzi = await client.GetAsync($"{Globals.Globals.end_point_get_company_application_by_search_ref}?SearchRef={applicationID}").Result.Content.ReadAsStringAsync();
 
+            var rhisponzi = await client.GetAsync($"{Globals.Globals.service_end_point}/{applicationID}/Details").Result.Content.ReadAsStringAsync();
             dynamic json_dataa = JsonConvert.DeserializeObject(rhisponzi);
-            dynamic dataa = json_dataa;
-            try
-            {
-                dataa = json_dataa.data.value;
-            }
-            catch (Exception ex)
-            {
-                return BadRequest();
-            }
 
-            mCompanyResponse companyApplication = JsonConvert.DeserializeObject<mCompanyResponse>(dataa.ToString());
-            ViewBag.companyApplication = companyApplication;
-            ///ViewBag.CompanyApplication = companyApplication;
-            return View(companyApplication);
+
+            CompanyApplicationForRewiew companyApplication = JsonConvert.DeserializeObject<CompanyApplicationForRewiew>(json_dataa.ToString());
+            ViewBag.CompanyApplication = companyApplication;
+            return View();
+            //---------------------
         }
         [HttpGet("ResolveQuery/{id}")]
         [HttpGet("ResolveQuery/{applicationRef}")]
         public async Task<IActionResult> ResolveQuery( string step, string applicationRef, string id=null, string applicationID=null)
         {
-           
+            var client = new HttpClient();
             //Code to get Registered Office Details
             if (step == "Step2")
             {
@@ -305,21 +299,21 @@ namespace BillerClientConsole.Controllers
 
                 //ViewBag.CompanyApplication = companyApplication;
                 // Redirecting to an another Action with the model data from database........
-                return RedirectToAction("ResolveMembersQuery", new{model=companyApplication});
+                return RedirectToAction("ResolveMembersQuery", new { applicationID = applicationRef });
                 ///return ResolveMembersQuery(companyApplication);
             }
             else if (step == "Step4")
             {
-                return RedirectToAction("",companyApplication);
+                return RedirectToAction("");
             }
 
                    
             return NotFound();
         }
 
-        [HttpPost("ResolveQueryPostRegisteredOffice")]
+        [HttpPost("ResolveQuery")]
 
-        public async Task<IActionResult> ResolveQueryPostRegisteredOffice(RegisteredOffice model)
+        public async Task<IActionResult> ResolveQuery(RegisteredOffice model)
         {
             var client = new HttpClient();
             if (ModelState.IsValid)
@@ -327,10 +321,10 @@ namespace BillerClientConsole.Controllers
                var result= await client.PostAsJsonAsync($"{Globals.Globals.service_end_point}/UpdateRegisteredOffice", model);
                 if (result.IsSuccessStatusCode)
                 {
-                    return Ok();
+                    return RedirectToAction("Dashboard","Home");
                 }   
             }
-            return Ok();
+            return View(model);
         }
     }
 }
