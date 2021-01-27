@@ -336,7 +336,7 @@ namespace BillerClientConsole.Controllers
 
         [HttpPost("ResolveQuery")]
 
-        public async Task<IActionResult> ResolveQuery(RegisteredOffice model)
+        public async Task<IActionResult> PostResolveQuery(RegisteredOffice model)
         {
             var client = new HttpClient();
             if (ModelState.IsValid)
